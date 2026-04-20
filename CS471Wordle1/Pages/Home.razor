@@ -1,7 +1,20 @@
-﻿@page "/"
+﻿@using WordleAPI
+@page "/"
+
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+@code {
+
+	void func()
+	{
+		new CustomDb<test>("test");
+	}
+	private class test
+	{
+		public int api { get; set; }
+	}
+}
