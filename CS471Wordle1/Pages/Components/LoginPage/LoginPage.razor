@@ -7,18 +7,7 @@
 @inject HttpClient Http
 @inject Login UserLogin
 @inject NavigationManager NavigationManager
-@* <h3>Login</h3>
 
-<div>
-    <label>Username:</label>
-    <input @bind="username" />
-
-    <label>Password:</label>
-    <input type="password" @bind="password" />
-
-    <button @onclick="Login">Login</button>
-</div>
- *@
 <EditForm Model="model" OnValidSubmit="Login">
 
     <div class="d-flex justify-content-center mt-5">
