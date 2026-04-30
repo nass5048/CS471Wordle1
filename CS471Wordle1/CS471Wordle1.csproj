@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WordleAPI\WordleAPI.csproj" />
+    <ProjectReference Include="..\WordleAPI\WordleBackend.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,8 @@
 @page "/"
 @inject DataBase db
 @inject Services.SpinnerService SpinnerService
-
-@foreach(var login in db.Login.Item)
+@inject HttpClient Http
+@foreach(var login in db.Login.Items)
 {
 	<div>
 		<span>Username: @login.Username</span>
@@ -14,30 +14,18 @@
 @code {
 	Login DefaultLogin { get; set; }
 
-	override protected void OnInitialized()
+	override protected async Task OnInitializedAsync()
 	{
-
-		DefaultLogin = new Login() { Username = "admin", Password = "password" };
-		db.Login.Item.Add(DefaultLogin);
-		db.SaveToDatabase();
-		foreach (var login in db.Login.Item)
-		{
-			Console.WriteLine($"Username: {login.Username}, Password: {login.Password}");
-		}
+		// var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
+		// if (test != null)
+		// 	db.UpdateStoredDB(test);
+		//  DefaultLogin = new Login() { Username = "admin", Password = "password" };
+		//  db.Login.Items.Add(DefaultLogin);
+		//  await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
 	}
 
 	public void OnLogin()
 	{
-		SpinnerService.Show();
-		foreach (var login in db.Login.Item)
-		{
-			if (login.Username == DefaultLogin.Username && login.Password == DefaultLogin.Password)
-			{
-				//TODO: Allow entry
-
-				break;
-			}
-		}
-		SpinnerService.Hide();
+		
 	}
 }

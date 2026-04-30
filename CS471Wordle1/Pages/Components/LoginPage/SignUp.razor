@@ -1,0 +1,73 @@
+﻿@page "/signup"
+@using System.ComponentModel.DataAnnotations
+@using WordleAPI
+@using WordleAPI.Classes
+@inject DataBase db
+@inject Services.SpinnerService SpinnerService
+@inject HttpClient Http
+
+<EditForm Model="model" OnValidSubmit="Register">
+    <DataAnnotationsValidator />
+
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card p-4 shadow" style="width: 350px;">
+            <h4 class="text-center mb-3">Create Account</h4>
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <InputText class="form-control" @bind-Value="model.Username" />
+                <ValidationMessage For="@(() => model.Username)" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <InputText type="password" class="form-control" @bind-Value="model.Password" />
+                <ValidationMessage For="@(() => model.Password)" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <InputText type="password" class="form-control" @bind-Value="model.ConfirmPassword" />
+                <ValidationMessage For="@(() => model.ConfirmPassword)" />
+            </div>
+
+            <button class="btn btn-success w-100" type="submit">Sign Up</button>
+
+            <div class="text-center mt-3 text-danger">@message</div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    SignupModel model = new();
+    string message = "";
+
+    async Task Register()
+    {
+        if (model.Password != model.ConfirmPassword)
+        {
+            message = "Passwords do not match.";
+            return;
+        }
+
+        // TODO: Call your API to create the user
+        var login = new Login() { Username = model.Username, Password = model.Password };
+        db.Login.Items.Add(login);
+        await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
+        message = $"Account created for {model.Username}";
+    }
+
+    public class SignupModel
+    {
+        [Required]
+        [MinLength(3)]
+        public string Username { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
+
+        [Required]
+        public string ConfirmPassword { get; set; }
+    }
+}
