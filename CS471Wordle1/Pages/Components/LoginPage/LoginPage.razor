@@ -1,12 +1,13 @@
 ﻿@page "/"
 @using WordleAPI
 @using WordleAPI.Classes
+@using System.ComponentModel.DataAnnotations
 @inject Services.SpinnerService SpinnerService
 @inject DataBase db
 @inject HttpClient Http
 @inject Login UserLogin
 @inject NavigationManager NavigationManager
-<h3>Login</h3>
+@* <h3>Login</h3>
 
 <div>
     <label>Username:</label>
@@ -17,30 +18,53 @@
 
     <button @onclick="Login">Login</button>
 </div>
+ *@
+<EditForm Model="model" OnValidSubmit="Login">
 
-<p>@message</p>
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card p-4 shadow" style="width: 350px;">
+            <h4 class="text-center mb-3">Login</h4>
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <InputText class="form-control" @bind-Value="model.Username" />
+                <ValidationMessage For="@(() => model.Username)" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <InputText type="password" class="form-control" @bind-Value="model.Password" />
+                <ValidationMessage For="@(() => model.Password)" />
+            </div>
+
+            <button class="btn btn-success w-100" type="submit">Login</button>
+            <div style="margin-top:20px"/>
+            <button class="btn btn-success w-100" @onclick=@(()=>NavigationManager.NavigateTo("/signup"))>Sign Up</button>
+            <div class="text-center mt-3 text-danger">@message</div>
+        </div>
+    </div>
+</EditForm>
 
 @code {
-    string username = "";
-    string password = "";
+    LoginModel model = new();
     string message = "";
 
     async Task Login()
     {
-        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
         {
             message = "Please enter both fields.";
             return;
         }
 
-        message = $"Attempting login for {username}";
+        message = $"Attempting login for {model.Username}";
         SpinnerService.Show();
         var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
         if (test != null)
             db.UpdateStoredDB(test);
         foreach (var login in db.Login)
         {
-            if (login.Username == username && login.Password == password)
+            if (login.Username == model.Username && login.Password == model.Password)
             {
 				UserLogin.SetUserLogin(login);
                 SpinnerService.Hide();
@@ -49,5 +73,13 @@
             }
         }
         SpinnerService.Hide();
+    }
+    public class LoginModel
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        public string Password { get; set; }
     }
 }

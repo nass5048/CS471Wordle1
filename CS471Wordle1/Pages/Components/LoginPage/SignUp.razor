@@ -5,6 +5,7 @@
 @inject DataBase db
 @inject Services.SpinnerService SpinnerService
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <EditForm Model="model" OnValidSubmit="Register">
     <DataAnnotationsValidator />
@@ -55,6 +56,7 @@
         db.Login.Add(login);
         await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
         message = $"Account created for {model.Username}";
+		NavigationManager.NavigateTo("/");
     }
 
     public class SignupModel

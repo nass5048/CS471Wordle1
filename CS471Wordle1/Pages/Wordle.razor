@@ -20,7 +20,7 @@
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
 
-	bool HideRobot { get; set; } = false;
+	bool HideRobot { get; set; } = true;
 	override protected async Task OnInitializedAsync()
 	{
 		try
