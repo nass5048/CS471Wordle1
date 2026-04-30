@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
+namespace WordleAPI.Classes;
 public class ApiClient
 {
     private readonly HttpClient _httpClient;
