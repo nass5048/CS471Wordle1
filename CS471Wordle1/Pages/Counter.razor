@@ -1,18 +1,52 @@
-﻿@page "/counter"
+﻿@page "/wordle"
 
-<PageTitle>Counter</PageTitle>
+@using System.Text.Json
+@using WordleAPI.Classes;
+@using CS471Wordle1.Pages.Components
+@inject Services.SpinnerService SpinnerService
+@inject HttpClient Http
 
-<h1>Counter</h1>
+<PageTitle>Wordle</PageTitle>
 
-<p role="status">Current count: @currentCount</p>
+@if (correctWord != null)
+{
+	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily"/>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
+	<RobotWordle Solution=@correctWord Hide=@HideRobot/> 
+}
 @code {
-    private int currentCount = 0;
+	string? correctWord{ get;set; }
+	WordResponse? dailyWord { get; set; }
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
+	bool HideRobot { get; set; } = true;
+	override protected async Task OnInitializedAsync()
+	{
+		try
+		{
+
+			SpinnerService.Show();
+
+			dailyWord = new WordResponse() { Solution = "stare" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
+			var date = DateTime.Today.ToString("yyyy-MM-dd");
+
+			correctWord = dailyWord.Solution;
+		}
+		catch (Exception ex)
+		{
+			Console.Error.WriteLine(ex);
+		}
+
+		//await stats.LoadAsync();
+		SpinnerService.Hide();
+	}
+
+	public class WordResponse
+	{
+		public string Solution { get; set; }
+	}
+
+	public void completeDaily()
+	{
+		HideRobot = false;
+	}
 }

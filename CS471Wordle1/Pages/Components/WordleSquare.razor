@@ -1,0 +1,41 @@
+﻿@using WordleAPI.Classes
+@using WordleAPI
+@using CS471Wordle1.Pages.Components
+<div class="wordle-square" style="background-color:@GetColor()">
+	<div class="letter">@Letter</div>
+</div>
+<style>
+	.letter{
+		color: white;
+		font-size: xx-large;
+	}
+
+	.wordle-square {
+		text-align: center;
+		width: 50px;
+		height: 50px;
+		display: inline-flex;
+		justify-content: center;
+	}
+
+</style>
+
+@code {
+	[Parameter]
+	public char Letter { get; set; }
+
+	[Parameter]
+	public ResponseColor Color { get; set; }
+
+	private string GetColor()
+	{
+		return Color switch
+		{
+			ResponseColor.green => "green",
+			ResponseColor.yellow => "goldenrod",
+			ResponseColor.grey => "grey",
+			_ => "black",
+		};
+	}
+
+}

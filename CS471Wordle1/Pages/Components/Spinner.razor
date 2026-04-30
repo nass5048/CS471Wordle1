@@ -1,0 +1,12 @@
+﻿@if (ShowSpinner)
+{
+	<div class="overlay">
+		<div class="spinner"/>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public bool ShowSpinner { get; set; } = false;
+
+}
