@@ -51,8 +51,8 @@
         }
 
         // TODO: Call your API to create the user
-        var login = new Login() { Username = model.Username, Password = model.Password };
-        db.Login.Items.Add(login);
+        var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Count()+1 };
+        db.Login.Add(login);
         await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
         message = $"Account created for {model.Username}";
     }

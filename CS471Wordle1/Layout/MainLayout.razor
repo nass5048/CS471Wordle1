@@ -1,4 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using WordleAPI
+@using WordleAPI.Classes
+@inject Login UserLogin
+@inject NavigationManager NavigationManager
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,11 +11,31 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <div>@UserLogin.Username</div>
+            @if (UserLogin.UserID ==0)
+            {
+                <button class="ml-auto" @onclick="GOTOLogin">Login</button>
+            }
+            else
+            {
+                <button class="ml-auto" @onclick="Logout">Logout</button>
+            }
         </div>
-
+        
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+
+@code{
+    void GOTOLogin()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    void Logout()
+    {
+        UserLogin.SetUserLogin(new Login());
+        NavigationManager.NavigateTo("/wordle");
+	}
+}

@@ -4,6 +4,7 @@
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
 @inject Services.SpinnerService SpinnerService
+@inject Login UserLogin
 @* @inject HttpClient Http *@
 
 <PageTitle>Wordle</PageTitle>
@@ -15,6 +16,7 @@
 	 <RobotWordle Solution=@correctWord Hide=@HideRobot/>  
 }
 @code {
+
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
 

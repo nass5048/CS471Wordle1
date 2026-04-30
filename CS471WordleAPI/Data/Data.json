@@ -1,19 +1,10 @@
 {
-  "stats": {
-    "items": []
-  },
-  "login": {
-    "items": [
-      {
-        "userID": 0,
-        "username": "mike",
-        "password": "123456"
-      },
-      {
-        "userID": 0,
-        "username": "Fuck",
-        "password": "MeInTheAss"
-      }
-    ]
-  }
+  "stats": [],
+  "login": [
+    {
+      "userID": 1,
+      "username": "mike",
+      "password": "123456"
+    }
+  ]
 }
