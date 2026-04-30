@@ -56,7 +56,14 @@
         var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
         if (test != null)
             db.UpdateStoredDB(test);
-
+        foreach (var logins in db.Login)
+        {
+            if (logins.Username == model.Username)
+            {
+                message = "Username already exists.";
+                return;
+            }
+		}
         var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Count()+1 };
         db.Login.Add(login);
         await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
