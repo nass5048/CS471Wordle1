@@ -1,7 +1,6 @@
 ﻿@using WordleAPI.Classes
 @using WordleAPI
 @using CS471Wordle1.Pages.Components
-@inject Stats stats
 
 
 <div class="stats">
@@ -53,6 +52,7 @@
     }
 </style>
 @code {
+    public Stats stats = new Stats();
     protected override Task OnInitializedAsync()
     {
         //TODO stats.LoadAsync();

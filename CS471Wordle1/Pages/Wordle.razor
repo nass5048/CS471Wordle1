@@ -3,28 +3,28 @@
 @using System.Text.Json
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
-@inject Services.SpinnerService SpinnerService
-@inject HttpClient Http
+@* @inject Services.SpinnerService SpinnerService *@
+@* @inject HttpClient Http *@
 
 <PageTitle>Wordle</PageTitle>
 
 @if (correctWord != null)
 {
-	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily"/>
+	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily"/> 
 
-	<RobotWordle Solution=@correctWord Hide=@HideRobot/> 
+	 <RobotWordle Solution=@correctWord Hide=@HideRobot/>  
 }
 @code {
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
 
-	bool HideRobot { get; set; } = true;
+	bool HideRobot { get; set; } = false;
 	override protected async Task OnInitializedAsync()
 	{
 		try
 		{
 
-			SpinnerService.Show();
+			//SpinnerService.Show();
 
 			dailyWord = new WordResponse() { Solution = "stare" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
 			var date = DateTime.Today.ToString("yyyy-MM-dd");
@@ -37,7 +37,7 @@
 		}
 
 		//await stats.LoadAsync();
-		SpinnerService.Hide();
+		//SpinnerService.Hide();
 	}
 
 	public class WordResponse

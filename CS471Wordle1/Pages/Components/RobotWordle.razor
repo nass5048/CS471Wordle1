@@ -3,7 +3,6 @@
 @using WordleAPI
 @using CS471Wordle1.Pages.Components
 @using Microsoft.AspNetCore.Components.Web
-@inject Stats stats
 
 <div class="@IsHidden()" style=" padding:8px; background:#f3f3f3; border-radius:6px;">
     @for (int r = 0; r < 6; r++)
@@ -182,7 +181,7 @@
             else
                 StatusMessage = $"Guesser produced {i} guess(es).";
 
-            stats.robotCount = Guesses.Count(p => p != null);
+            //TODO stats.robotCount = Guesses.Count(p => p != null);
 
             // final UI refresh
             await InvokeAsync(StateHasChanged);

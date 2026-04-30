@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="WordleWords.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="WordleWords.txt" />
+  </ItemGroup>
+
 </Project>
