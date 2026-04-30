@@ -3,7 +3,7 @@
 @using System.Text.Json
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
-@* @inject Services.SpinnerService SpinnerService *@
+@inject Services.SpinnerService SpinnerService
 @* @inject HttpClient Http *@
 
 <PageTitle>Wordle</PageTitle>
@@ -24,7 +24,7 @@
 		try
 		{
 
-			//SpinnerService.Show();
+			SpinnerService.Show();
 
 			dailyWord = new WordResponse() { Solution = "stare" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
 			var date = DateTime.Today.ToString("yyyy-MM-dd");
@@ -37,7 +37,7 @@
 		}
 
 		//await stats.LoadAsync();
-		//SpinnerService.Hide();
+		SpinnerService.Hide();
 	}
 
 	public class WordResponse

@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using WordleAPI.Classes;
 
 namespace WordleAPI;
-
+//TODO: put this into the wwwroot to save and update the json dynamically
 public class CustomDb<TItem>
 {
     string FilePath { get; set; }
@@ -39,13 +39,16 @@ public class CustomDb<TItem>
 public class DataBase
 {
     public CustomDb<Stats> Stats { get; set; }
+    public CustomDb<Login> Login { get; set; }
 
     public DataBase()
     {
         Stats = new CustomDb<Stats>("Stats.json");
+        Login = new CustomDb<Login>("Login.json");
     }
     public void SaveToDatabase()
     {
         Stats.SaveToDB();
+        Login.SaveToDB();
     }
 }

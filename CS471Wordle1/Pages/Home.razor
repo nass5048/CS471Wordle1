@@ -1,20 +1,43 @@
 ﻿@using WordleAPI
+@using WordleAPI.Classes
 @page "/"
+@inject DataBase db
+@inject Services.SpinnerService SpinnerService
 
-
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+@foreach(var login in db.Login.Item)
+{
+	<div>
+		<span>Username: @login.Username</span>
+		<span>Password: @login.Password</span>
+	</div>
+}
 @code {
+	Login DefaultLogin { get; set; }
 
-	void func()
+	override protected void OnInitialized()
 	{
-		new CustomDb<test>("test");
+
+		DefaultLogin = new Login() { Username = "admin", Password = "password" };
+		db.Login.Item.Add(DefaultLogin);
+		db.SaveToDatabase();
+		foreach (var login in db.Login.Item)
+		{
+			Console.WriteLine($"Username: {login.Username}, Password: {login.Password}");
+		}
 	}
-	private class test
+
+	public void OnLogin()
 	{
-		public int api { get; set; }
+		SpinnerService.Show();
+		foreach (var login in db.Login.Item)
+		{
+			if (login.Username == DefaultLogin.Username && login.Password == DefaultLogin.Password)
+			{
+				//TODO: Allow entry
+
+				break;
+			}
+		}
+		SpinnerService.Hide();
 	}
 }
