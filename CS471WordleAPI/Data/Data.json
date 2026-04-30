@@ -3,8 +3,18 @@
   "login": [
     {
       "userID": 1,
-      "username": "Fuck",
-      "password": "YouToo"
+      "username": "GuestUser",
+      "password": "password"
+    },
+    {
+      "userID": 2,
+      "username": "mike",
+      "password": "123456"
+    },
+    {
+      "userID": 3,
+      "username": "mike",
+      "password": "123456"
     }
   ]
 }
