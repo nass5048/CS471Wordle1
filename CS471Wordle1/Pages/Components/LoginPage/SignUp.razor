@@ -63,7 +63,7 @@
             Console.Error.WriteLine(ex);
             message = "Could not retrieve DataBase";
         }
-    foreach (var logins in db.Login)
+        foreach (var logins in db.Login)
         {
             if (logins.Username == model.Username)
             {

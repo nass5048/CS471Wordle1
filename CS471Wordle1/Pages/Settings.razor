@@ -21,6 +21,20 @@
 
             <hr />
 
+            <!-- Reset Username Section -->
+            <h5 class="fw-bold mb-3">Reset Username</h5>
+
+            <div class="mb-3">
+                <label class="form-label">New Username</label>
+                <InputText class="form-control" @bind-Value="NewUsername" />
+            </div>
+
+            <button class="btn btn-danger w-100" @onclick="ResetUsername">
+                Reset Username
+            </button>
+
+            <hr />
+
             <!-- Reset Password Section -->
             <h5 class="fw-bold mb-3">Reset Password</h5>
 
@@ -49,6 +63,7 @@
 @code {
     string NewPassword = "";
     string ConfirmPassword = "";
+	string NewUsername = "";
     string Message = "";
 
     async Task ResetPassword()
@@ -70,6 +85,29 @@
         await db.SaveData(Http);
         // TODO: Call your API to update the password
         Message = "Password successfully reset.";
+    }
+
+    async Task ResetUsername()
+    {
+        if (string.IsNullOrWhiteSpace(NewUsername))
+        {
+            Message = "Please enter a new username.";
+            return;
+        }
+        foreach (var logins in db.Login)
+        {
+            if (logins.Username == NewUsername)
+            {
+                Message = "Username already exists.";
+                return;
+            }
+        }
+        await db.LoadData(Http);
+        UserLogin.Username = NewUsername;
+        db.UpdateUserData(UserLogin);
+        await db.SaveData(Http);
+        Message = "Username successfully reset.";
+		StateHasChanged();
     }
 
     async Task UpdateVolume()
