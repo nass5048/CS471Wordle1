@@ -55,9 +55,9 @@
         // TODO: Call your API to create the user
         try
         {
-            // var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
-            // if (test != null)
-            //     db.UpdateStoredDB(test);
+            var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
+            if (test != null)
+                db.UpdateStoredDB(test);
         }
         catch(Exception ex){
             Console.Error.WriteLine(ex);

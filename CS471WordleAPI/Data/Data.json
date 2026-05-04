@@ -3,10 +3,31 @@
   "login": [
     {
       "userID": 1,
+      "username": "admin",
+      "password": "admins",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "userID": 0,
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "lastPlayed": null,
+        "maxStreak": 0,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 2
+    },
+    {
+      "userID": 2,
       "username": "mike",
       "password": "123456",
       "userSettings": {
-        "volume": 67
+        "volume": 100
       },
       "userStats": {
         "userID": 0,

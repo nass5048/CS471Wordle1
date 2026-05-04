@@ -1,0 +1,20 @@
+﻿@page "/admin"
+@using WordleAPI.Classes
+@using WordleBackend.Enums
+@using WordleAPI
+@inject Login UserLogin
+@inject HttpClient Http
+@inject DataBase db
+
+@if(UserLogin.UserPermission == Permission.Admin)
+{
+    <h3>Admin Panel</h3>
+} 
+else
+{
+    <div class="text-center mt-3 text-danger">You do not have permission to access this page.</div>
+}
+
+@code {
+
+}
