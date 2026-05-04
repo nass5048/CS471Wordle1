@@ -4,6 +4,7 @@
 @using WordleAPI
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
+@using WordleBackend.Classes
 @using WordleBackend.Enums
 @inject Services.SpinnerService SpinnerService
 @inject Login UserLogin
@@ -39,6 +40,7 @@
 	[Parameter]
 	public Challenge challenge { get; set; }
 
+	public bool Error { get; set; } = false;
 
 
 	string? correctWord{ get;set; }
@@ -54,12 +56,13 @@
 			SpinnerService.Show();
 			if (gameMode == GameMode.Daily)
 			{
-				var word = db.DailyWords.First(w => w.Date == DateOnly.FromDateTime(DateTime.Today)).Word;
-				if (string.IsNullOrWhiteSpace(word))
+				var word = db.DailyWords.FirstOrDefault(w => w.Date == DateOnly.FromDateTime(DateTime.Today));
+				if (word == null)
 				{
-					word = "stare";
+					word = new DailyWords() { Date = DateOnly.FromDateTime(DateTime.Today), Word = "stair" };
+					Error = true;
 				}
-				dailyWord = new WordResponse() { Solution = word };
+				dailyWord = new WordResponse() { Solution = word.Word };
 			}
 			else
 			{
