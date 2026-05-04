@@ -11,19 +11,19 @@ public class DataBase
     public List<DailyWords> DailyWords { get; set; }
 
 
-    public List<Stats?> Stats { get; set; }
+    //public List<Stats?> Stats { get; set; }
     public List<Login> Login { get; set; }
 
     // Optionally pass a basePath from the host (for example IWebHostEnvironment.ContentRootPath)
     public DataBase()
     {
-        Stats = new List<Stats?>();
+        //Stats = new List<Stats?>();
         Login = new List<Login>();
         DailyWords = new List<DailyWords>();
     }
     public void UpdateStoredDB(DataBase dataBase)
     {
-        Stats = dataBase.Stats;
+        //Stats = dataBase.Stats;
         Login = dataBase.Login;
         DailyWords = dataBase.DailyWords;
     }

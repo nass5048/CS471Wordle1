@@ -25,12 +25,16 @@
             }
         </div>
         
-        <article class="content px-4">
+        <article class="content px-4 parent">
             @Body
         </article>
     </main>
 </div>
-
+<style>
+    .parent {
+        position: relative; /* This "captures" the absolute child */
+    }
+</style>
 
 @code{
     private bool showSpinner = false;

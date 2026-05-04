@@ -242,8 +242,10 @@
             StatusMessage = $"Solved in {CurrentRow + 1} guess(es)!";
             CurrentRow = 6;
             CurrentGuess = "";
-            UserLogin.UserStats.FinishGame(true, Guesses);
-            OnGameCompleted.InvokeAsync(null);
+            await UserLogin.UserStats.FinishGame(true, Guesses);
+			db.UpdateUserData(UserLogin);
+            await db.SaveData(Http);
+            await OnGameCompleted.InvokeAsync(null);
             return;
         }
 
@@ -253,8 +255,10 @@
         if (CurrentRow >= 6)
         {
             StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
-            UserLogin.UserStats.FinishGame(false, Guesses);
-            OnGameCompleted.InvokeAsync(null);
+            await UserLogin.UserStats.FinishGame(false, Guesses);
+            db.UpdateUserData(UserLogin);
+            await db.SaveData(Http);
+            await OnGameCompleted.InvokeAsync(null);
         }
     }
 

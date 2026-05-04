@@ -2,7 +2,6 @@
 
 public class Stats
 {
-    public long UserID { get; set; }
     public int GamesPlayed { get; set; }
     public int GamesWon { get; set; }
     public int RobotWins { get; set; }

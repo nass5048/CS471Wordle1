@@ -17,12 +17,11 @@
 
 @if (correctWord != null)
 {
-	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/> 
+	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/>
 	if(challenge == Challenge.None || challenge == Challenge.HardMode)
 	{
 		<div class="top-right">
-
-			<RobotWordle Solution=@correctWord Hide=@HideRobot/>
+			<RobotWordle Solution=@correctWord Hide=@HideRobot />
 		</div>
 
 	}
@@ -40,11 +39,13 @@ else
 }
 <style>
 	.top-right {
-		position: fixed;
-		top: 75px;
-		right: 25px;
+		position: absolute;
+		top: 20px;
+		right: 20px;
 		z-index: 9999;
 	}
+
+	
 </style>
 
 @code {
