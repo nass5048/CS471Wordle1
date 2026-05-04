@@ -1,0 +1,16 @@
+﻿@using WordleBackend.Enums
+@using WordleAPI.Classes
+@page "/game/{gameModeParam}/{challengeParam}"
+
+<div>@gameMode  @challenge</div>
+
+@code {
+    [Parameter]
+    public string challengeParam { get; set; }
+
+    [Parameter]
+    public string gameModeParam { get; set; }
+
+    public GameMode gameMode => Enum.Parse<GameMode>(gameModeParam);
+    public Challenge challenge => Enum.Parse <Challenge>(challengeParam);
+}

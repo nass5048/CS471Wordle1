@@ -1,26 +1,67 @@
 ﻿@using WordleBackend.Enums
 @using WordleAPI.Classes
 @inject Login UserLogin
+@inject NavigationManager Navigation
 
 @page "/home"
 
 <EditForm Model="@model">
-    <select @bind="model.gameMode" class="form-select">
-        @foreach (var value in Enum.GetValues(typeof(GameMode)))
-        {
-            <option value="@value">@value</option>
-        }
-    </select>
 
-    <select @bind="model.challenge" class="form-select">
-        @foreach (var value in Enum.GetValues(typeof(Challenge)))
-        {
-            <option value="@value">@value</option>
-        }
-    </select>
+    <div class="container mt-5">
+
+        <h1 class="fw-bold text-center mb-4">Wordle+</h1>
+        <p class="text-center text-muted mb-5">
+            Customize your game and start playing instantly.
+        </p>
+
+        <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+
+            <h4 class="fw-bold mb-3">Game Settings</h4>
+
+            <!-- Game Mode -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Game Mode</label>
+                <select @bind="model.gameMode" class="form-select">
+                    @foreach (var mode in Enum.GetValues(typeof(GameMode)))
+                    {
+                        <option value="@mode">@mode</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Difficulty -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Difficulty</label>
+                <select @bind="model.challenge" class="form-select">
+                    @foreach (var diff in Enum.GetValues(typeof(Challenge)))
+                    {
+                        <option value="@diff">@diff</option>
+                    }
+                </select>
+            </div>
+
+            
+
+            <button class="btn btn-success w-100 mt-3" @onclick="StartGame">
+                Start Game
+            </button>
+
+        </div>
+    </div>
 </EditForm>
 
+
+
+
+
 @code {
+
+
+    private void StartGame()
+    {
+        Navigation.NavigateTo($"/game/{model.gameMode}/{model.challenge}");
+    }
+
 
     private WordleSelector model = new WordleSelector();
 
