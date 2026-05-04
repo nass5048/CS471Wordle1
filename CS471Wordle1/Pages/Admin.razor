@@ -149,16 +149,16 @@ else
 
     private DateOnly GetFirstAvailableDate()
     {
-        var today = DateOnly.FromDateTime(DateTime.Today);
+        var yesterday = DateOnly.FromDateTime(DateTime.Today).AddDays(-1);
 
         // Get all scheduled dates after today
         var usedDates = db.DailyWords
-            .Where(r => r.Date > today)
+            .Where(r => r.Date > yesterday)
             .Select(r => r.Date)
             .ToHashSet();
 
         // Start checking tomorrow
-        var check = today.AddDays(1);
+        var check = yesterday.AddDays(1);
 
         // Increment until we find a free date
         while (usedDates.Contains(check))
