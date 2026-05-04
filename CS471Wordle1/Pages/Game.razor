@@ -3,7 +3,7 @@
 @page "/game/{gameModeParam}/{challengeParam}"
 
 <div>@gameMode  @challenge</div>
-
+<Wordle challenge="challenge" gameMode="gameMode"/>
 @code {
     [Parameter]
     public string challengeParam { get; set; }

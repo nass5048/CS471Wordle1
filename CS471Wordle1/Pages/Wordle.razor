@@ -1,8 +1,9 @@
-﻿@page "/wordle"
+﻿@* @page "/wordle" *@
 
 @using System.Text.Json
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
+@using WordleBackend.Enums
 @inject Services.SpinnerService SpinnerService
 @inject Login UserLogin
 @* @inject HttpClient Http *@
@@ -11,11 +12,16 @@
 
 @if (correctWord != null)
 {
-	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily"/> 
-
-	 <RobotWordle Solution=@correctWord Hide=@HideRobot/>  
+	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge"/> 
+	  if(challenge == Challenge.None || challenge == Challenge.HardMode){
+		<RobotWordle Solution=@correctWord Hide=@HideRobot/>  
+	  }
 }
 @code {
+	[Parameter]
+    public GameMode gameMode { get; set; }
+	[Parameter]
+    public Challenge challenge { get; set; }
 
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }

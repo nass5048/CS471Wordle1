@@ -3,8 +3,9 @@
 @using WordleAPI
 @using CS471Wordle1.Pages.Components
 @using Microsoft.AspNetCore.Components.Web
+@using WordleBackend.Enums
 
-
+<div>@StatusMessage</div>
 <div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
 
 
@@ -77,6 +78,10 @@
     [Parameter]
     public EventCallback OnGameCompleted { get; set; }
 
+    [Parameter]
+    public Challenge challenge { get; set; }
+
+
     private int CurrentRow { get; set; } = 0;
     private string CurrentGuess { get; set; } = "";
     private List<WordGuessResponse?> Guesses { get; set; } = new();
@@ -91,7 +96,7 @@
         //TODO await stats.LoadAsync();
 
         StartNewGame();
-        
+
         // Restore previous game safely (stats.Guesses may be null)
         if (stats.LastPlayed.HasValue && stats.LastPlayed.Value.Date == DateTime.Today)
         {
@@ -184,13 +189,35 @@
     {
         StatusMessage = "";
         Console.WriteLine($"Submitting guess: {CurrentGuess}");
+        var response = new WordGuessResponse(Solution, CurrentGuess, challenge, false);
+
+        if(challenge == Challenge.HardMode && CurrentRow != 0)
+        {
+            var index = 0;
+            foreach(var color in Guesses[CurrentRow - 1].Colors)
+            {
+
+                if (color == ResponseColor.green && response.Colors[index] != ResponseColor.green)
+                {
+                    StatusMessage = "NotValidWord";
+                    return;
+                }
+                if (color == ResponseColor.yellow && !response.Word.Contains(Guesses[CurrentRow - 1].Word[index]))
+                {
+                    StatusMessage = "NotValidWord";
+                    return;
+                }
+                index++;
+            }
+        }
+
         if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !Utilitys.IsWordInText(CurrentGuess, "WordleWords.txt"))
         {
             return;
         }
 
 
-        var response = new WordGuessResponse(Solution, CurrentGuess, WordleBackend.Enums.Challenge.None, false);
+        
         Guesses[CurrentRow] = response;
         UpdateKeyboardState(response);
 
