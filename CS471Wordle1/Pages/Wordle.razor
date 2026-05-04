@@ -1,11 +1,14 @@
 ﻿@* @page "/wordle" *@
 
 @using System.Text.Json
+@using WordleAPI
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
 @using WordleBackend.Enums
 @inject Services.SpinnerService SpinnerService
 @inject Login UserLogin
+@inject DataBase db
+@inject HttpClient Http
 @* @inject HttpClient Http *@
 
 <PageTitle>Wordle</PageTitle>
@@ -32,11 +35,11 @@
 
 @code {
 	[Parameter]
-    public GameMode gameMode { get; set; }
+	public GameMode gameMode { get; set; }
 	[Parameter]
-    public Challenge challenge { get; set; }
+	public Challenge challenge { get; set; }
 
-	
+
 
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
@@ -44,12 +47,24 @@
 	bool HideRobot { get; set; } = true;
 	override protected async Task OnInitializedAsync()
 	{
+		await db.LoadData(Http);
 		try
 		{
 
 			SpinnerService.Show();
-
-			dailyWord = new WordResponse() { Solution = "stair" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
+			if (gameMode == GameMode.Daily)
+			{
+				var word = db.DailyWords.First(w => w.Date == DateOnly.FromDateTime(DateTime.Today)).Word;
+				if (string.IsNullOrWhiteSpace(word))
+				{
+					word = "stare";
+				}
+				dailyWord = new WordResponse() { Solution = word };
+			}
+			else
+			{
+				dailyWord = new WordResponse() { Solution = "stair" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
+			}
 			var date = DateTime.Today.ToString("yyyy-MM-dd");
 
 			correctWord = dailyWord.Solution;

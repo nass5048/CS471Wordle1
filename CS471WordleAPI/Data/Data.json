@@ -1,10 +1,6 @@
 {
   "dailyWords": [
     {
-      "date": "2026-05-05",
-      "word": "stare"
-    },
-    {
       "date": "2026-05-07",
       "word": "thief"
     },
@@ -23,6 +19,18 @@
     {
       "date": "2026-05-11",
       "word": "wilds"
+    },
+    {
+      "date": "2026-05-04",
+      "word": "fucks"
+    },
+    {
+      "date": "2026-05-09",
+      "word": "child"
+    },
+    {
+      "date": "2026-05-05",
+      "word": "child"
     }
   ],
   "stats": [],
@@ -41,9 +49,52 @@
         "robotWins": 0,
         "robotLosses": 0,
         "currentStreak": 0,
-        "lastPlayed": null,
+        "lastPlayed": "2026-05-04T14:43:27.125-04:00",
         "maxStreak": 0,
-        "dailyGuesses": null,
+        "dailyGuesses": [
+          {
+            "word": "start",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "fucks",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null
+        ],
         "robotCount": 0
       },
       "userPermission": 2
