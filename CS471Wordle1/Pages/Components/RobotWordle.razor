@@ -12,8 +12,10 @@
             {
                 var ch = GetCellChar(r, c);
                 var color = GetCellColor(r, c);
-                <div class="tile @GetTileClass(color)">
-                    @ch
+                <div class="tilebot @GetTileClass(color)">
+                    @if(!Hide){
+                        @ch
+                    }
                 </div>
             }
         </div>
@@ -33,14 +35,14 @@
         margin: 6px 0;
         justify-content: center;
     }
-    .tile {
-        width: 48px;
-        height: 48px;
+    .tilebot {
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 12px;
         border-radius: 6px;
         background: var(--extra-light-gray, #e9e9e9);
         color: var(--wordleBlack, #212121);
@@ -48,17 +50,17 @@
         text-transform: uppercase;
     }
 
-        .tile.correct {
+        .tilebot.correct {
             background: #6aaa64;
             color: white;
         }
 
-        .tile.present {
+        .tilebot.present {
             background: #c9b458;
             color: white;
         }
 
-        .tile.grey {
+        .tilebot.grey {
             background: #787c7e;
             color: white;
         }
@@ -88,10 +90,10 @@
 
     private string IsHidden()
     {
-        if (Hide)
-            return "hide";
+        // if (Hide)
+        //     return "hide";
 
-        return "unhide";
+         return "unhide";
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

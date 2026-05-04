@@ -14,9 +14,22 @@
 {
 	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge"/> 
 	  if(challenge == Challenge.None || challenge == Challenge.HardMode){
-		<RobotWordle Solution=@correctWord Hide=@HideRobot/>  
+		<div class="top-right">
+
+			<RobotWordle Solution=@correctWord Hide=@HideRobot/>
+		</div>
+
 	  }
 }
+<style>
+	.top-right {
+		position: fixed;
+		top: 75px;
+		right: 25px;
+		z-index: 9999;
+	}
+</style>
+
 @code {
 	[Parameter]
     public GameMode gameMode { get; set; }
