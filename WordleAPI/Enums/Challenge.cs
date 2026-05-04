@@ -10,12 +10,8 @@ namespace WordleBackend.Enums
     public enum Challenge
     {
         None,
-        [Display(Name = "All Green")]
-
         AllGreen,
-        [Display(Name = "All Yellow")]
         AllYellow,
-        [Display(Name = "Hard")]
         HardMode,
     }
 }
