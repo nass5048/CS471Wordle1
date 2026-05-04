@@ -1,9 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @using WordleAPI
 @using WordleAPI.Classes
+@using CS471Wordle1.Pages.Components
 @inject Login UserLogin
 @inject NavigationManager NavigationManager
+@inject Services.SpinnerService SpinnerService
 
+<Spinner ShowSpinner="showSpinner" />
 <div class="page">
     <div class="sidebar">
         <NavMenu LoggedIn="UserLogin.UserPermission != WordleBackend.Enums.Permission.Guest" />
@@ -28,8 +31,38 @@
     </main>
 </div>
 
+
 @code{
+    private bool showSpinner = false;
     public bool LoggedIn { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        // initialize state and subscribe to changes
+        showSpinner = SpinnerService.IsShowing;
+        SpinnerService.OnChange += SpinnerChanged;
+    }
+
+    private void SpinnerChanged(bool showing)
+    {
+        showSpinner = showing;
+        // ensure update on UI thread
+        InvokeAsync(StateHasChanged);
+    }
+
+    // Backwards-compatible method (keeps your existing callers working)
+    public Task ToggleSpinner(bool show)
+    {
+        SpinnerService.Toggle(show);
+        return Task.CompletedTask;
+    }
+
+    // Unsubscribe to avoid memory leaks
+    public void Dispose()
+    {
+        SpinnerService.OnChange -= SpinnerChanged;
+    }
+    
     void GOTOLogin()
     {
         StateHasChanged();

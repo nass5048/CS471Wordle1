@@ -10,20 +10,33 @@
 @inject Login UserLogin
 @inject DataBase db
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 @* @inject HttpClient Http *@
 
 <PageTitle>Wordle</PageTitle>
 
 @if (correctWord != null)
 {
-	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/> 
-	  if(challenge == Challenge.None || challenge == Challenge.HardMode){
+	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/> 
+	if(challenge == Challenge.None || challenge == Challenge.HardMode)
+	{
 		<div class="top-right">
 
 			<RobotWordle Solution=@correctWord Hide=@HideRobot/>
 		</div>
 
-	  }
+	}
+	@if (showContinue)
+	{
+		<button class="btn btn-success btn-sm me-2" @onclick="Continue">Continue</button>
+	}
+}
+else
+{
+	<div class="text-center mt-5">
+		@Error
+	</div>
+
 }
 <style>
 	.top-right {
@@ -40,8 +53,9 @@
 	[Parameter]
 	public Challenge challenge { get; set; }
 
-	public bool Error { get; set; } = false;
+	public string Error { get; set; } = "";
 
+	private bool showContinue {get; set; } = false;
 
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
@@ -49,28 +63,40 @@
 	bool HideRobot { get; set; } = true;
 	override protected async Task OnInitializedAsync()
 	{
+		SpinnerService.Show();
 		await db.LoadData(Http);
 		try
 		{
 
-			SpinnerService.Show();
+
 			if (gameMode == GameMode.Daily)
 			{
-				var word = db.DailyWords.FirstOrDefault(w => w.Date == DateOnly.FromDateTime(DateTime.Today));
-				if (word == null)
+				var word = db.DailyWords.First(w => w.Date == DateOnly.FromDateTime(DateTime.Today));
+				if (word != null)
 				{
-					word = new DailyWords() { Date = DateOnly.FromDateTime(DateTime.Today), Word = "stair" };
-					Error = true;
+					dailyWord = new WordResponse() { Solution = word.Word };
 				}
-				dailyWord = new WordResponse() { Solution = word.Word };
+				else
+				{
+					Error = "Today's word has not been set yet. Please check back later.";
+				}
 			}
 			else
 			{
-				dailyWord = new WordResponse() { Solution = "stair" };//await Http.GetFromJsonAsync<WordResponse>("daily-word.json");
+				var availableWords = Utilitys.GetEmbeddedTextResource("WordleWords.txt")
+					.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+					.Select(w => w.Trim().ToLowerInvariant())
+					.Where(w => w.Length == 5)
+					.ToList();
+				Random rand = new Random();
+
+				dailyWord = new WordResponse() { Solution = availableWords[rand.Next(availableWords.Count())] };
 			}
 			var date = DateTime.Today.ToString("yyyy-MM-dd");
-
-			correctWord = dailyWord.Solution;
+			if (dailyWord != null)
+			{ 
+				correctWord = dailyWord.Solution;
+			}
 		}
 		catch (Exception ex)
 		{
@@ -89,5 +115,21 @@
 	public void completeDaily()
 	{
 		HideRobot = false;
+		//TODO need button to show up to continue to next game if not daily
+		showContinue = true;
+
+	}
+
+	public async Task Continue()
+	{
+		if (gameMode == GameMode.Daily)
+		{
+			NavigationManager.NavigateTo("/");
+		}
+		HideRobot = true;
+		showContinue = false;
+		correctWord = null;
+		StateHasChanged();
+		await OnInitializedAsync();
 	}
 }

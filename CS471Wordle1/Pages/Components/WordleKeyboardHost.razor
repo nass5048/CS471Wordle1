@@ -227,15 +227,16 @@
             return;
         }
 
-
-
         Guesses[CurrentRow] = response;
         UpdateKeyboardState(response);
-        UserLogin.UserStats.DailyGuesses = Guesses;
-        
-        db.UpdateUserData(UserLogin);
-        await db.SaveData(Http);
+        if (gameMode == GameMode.Daily)
+        {
+            UserLogin.UserStats.DailyGuesses = Guesses;
 
+            db.UpdateUserData(UserLogin);
+            await db.SaveData(Http);
+
+        }
         if (CurrentGuess.Equals(Solution, StringComparison.OrdinalIgnoreCase))
         {
             StatusMessage = $"Solved in {CurrentRow + 1} guess(es)!";
