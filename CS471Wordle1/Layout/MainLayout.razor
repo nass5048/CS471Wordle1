@@ -6,7 +6,7 @@
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu LoggedIn="UserLogin.UserPermission != WordleBackend.Enums.Permission.Guest" />
     </div>
 
     <main>
@@ -29,13 +29,19 @@
 </div>
 
 @code{
+    public bool LoggedIn { get; set; } = false;
     void GOTOLogin()
     {
-        NavigationManager.NavigateTo("/");
+        StateHasChanged();
+        NavigationManager.NavigateTo("/login");
+        
     }
     void Logout()
     {
         UserLogin.SetUserLogin(new Login());
-        NavigationManager.NavigateTo("/wordle");
+        LoggedIn = false;
+        StateHasChanged();
+        NavigationManager.NavigateTo("/");
+        
 	}
 }

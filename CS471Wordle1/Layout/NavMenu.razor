@@ -1,4 +1,5 @@
 ﻿@using WordleAPI.Classes
+@using WordleBackend.Enums
 @inject Login UserLogin
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -13,20 +14,28 @@
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="home">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
+        @* <div class="nav-item px-3">
+            <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Login
+            </NavLink>
+        </div> *@
+        @if (UserLogin.UserPermission == Permission.Admin || UserLogin.UserPermission == Permission.User)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="settings" Match="NavLinkMatch.All">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Settings
+                </NavLink>
+            </div>
+        }
+        @* <div class="nav-item px-3">
             <NavLink class="nav-link" href="wordle">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Wordle
             </NavLink>
-        </div>
+        </div> *@
        @*  <div class="nav-item px-3">
             <NavLink class="nav-link" href="login">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Login
@@ -41,6 +50,16 @@
 </div>
 
 @code {
+    [Parameter] public bool LoggedIn { get; set; }
+    [Parameter] public EventCallback<bool> LoggedInChanged { get; set; }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        await LoggedInChanged.InvokeAsync((bool)e.Value);
+        StateHasChanged();
+    }
+
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

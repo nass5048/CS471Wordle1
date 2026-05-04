@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/login"
 @using WordleAPI
 @using WordleAPI.Classes
 @using System.ComponentModel.DataAnnotations
@@ -57,7 +57,7 @@
             {
 				UserLogin.SetUserLogin(login);
                 SpinnerService.Hide();
-                NavigationManager.NavigateTo("/wordle");
+                NavigationManager.NavigateTo("/");
                 break;
             }
         }

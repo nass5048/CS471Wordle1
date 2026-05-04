@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using WordleBackend.Classes;
+using WordleBackend.Enums;
 
 namespace WordleAPI.Classes;
 
@@ -20,6 +21,8 @@ public class Login
 
     public Stats UserStats { get; set; } = new Stats();
 
+    public Permission UserPermission { get; set; } = Permission.Guest;
+
     public void SetUserLogin(Login login)
     {
         UserID = login.UserID;
@@ -27,5 +30,6 @@ public class Login
         Password = login.Password;
         UserSettings = login.UserSettings;
         UserStats = login.UserStats;
+        UserPermission = login.UserPermission;
     }
 }

@@ -2,6 +2,7 @@
 @using System.ComponentModel.DataAnnotations
 @using WordleAPI
 @using WordleAPI.Classes
+@using WordleBackend.Enums
 @inject DataBase db
 @inject Services.SpinnerService SpinnerService
 @inject HttpClient Http
@@ -70,12 +71,12 @@
                 return;
             }
 		}
-        var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Count()+1 };
+        var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Count()+1, UserPermission = Permission.User };
         db.Login.Add(login);
         await Http.PostAsJsonAsync("https://localhost:7160/api/data", db);
         message = $"Account created for {model.Username}";
         await Task.Delay(5000);
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/login");
     }
 
     public class SignupModel

@@ -1,0 +1,81 @@
+﻿@page "/settings"
+@using WordleAPI
+@using WordleAPI.Classes
+@using WordleBackend.Enums
+@inject Login UserLogin
+@inject HttpClient Http
+@inject DataBase db
+@if(UserLogin.UserPermission == Permission.Admin || UserLogin.UserPermission == Permission.User){
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card p-4 shadow" style="width: 420px;">
+            <h3 class="text-center mb-4">Settings</h3>
+
+            <!-- Volume Section -->
+            <div class="mb-4">
+                <label class="form-label fw-bold">Volume: @UserLogin.UserSettings.Volume%</label>
+                <input type="range"
+                       class="form-range"
+                       min="0" max="100"
+                       @bind="UserLogin.UserSettings.Volume" @bind:after="UpdateVolume" />
+            </div>
+
+            <hr />
+
+            <!-- Reset Password Section -->
+            <h5 class="fw-bold mb-3">Reset Password</h5>
+
+            <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <InputText type="password" class="form-control" @bind-Value="NewPassword" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <InputText type="password" class="form-control" @bind-Value="ConfirmPassword" />
+            </div>
+
+            <button class="btn btn-danger w-100" @onclick="ResetPassword">
+                Reset Password
+            </button>
+
+            <div class="text-center mt-3 text-info">@Message</div>
+        </div>
+    </div>
+} else
+{
+    <div class="text-center mt-3 text-danger">You do not have permission to access this page.</div>
+}
+
+@code {
+    string NewPassword = "";
+    string ConfirmPassword = "";
+    string Message = "";
+
+    async Task ResetPassword()
+    {
+        if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))
+        {
+            Message = "Please fill out both fields.";
+            return;
+        }
+
+        if (NewPassword != ConfirmPassword)
+        {
+            Message = "Passwords do not match.";
+            return;
+        }
+        await db.LoadData(Http);
+        UserLogin.Password = NewPassword;
+        db.UpdateUserData(UserLogin);
+        await db.SaveData(Http);
+        // TODO: Call your API to update the password
+        Message = "Password successfully reset.";
+    }
+
+    async Task UpdateVolume()
+    {
+        await db.LoadData(Http);
+        db.UpdateUserData(UserLogin);
+        await db.SaveData(Http);
+    }
+}
