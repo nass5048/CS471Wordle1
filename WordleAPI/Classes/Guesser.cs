@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using WordleBackend.Enums;
 
 namespace WordleAPI.Classes;
 
@@ -51,7 +52,7 @@ public class Guesser
         if (bestGuess == null)
             return "";
 
-        FailedGuesses.Add(new WordGuessResponse(correctWord, bestGuess.Word));
+        FailedGuesses.Add(new WordGuessResponse(correctWord, bestGuess.Word, Challenge.None, true));
         return bestGuess.Word;
     }
 

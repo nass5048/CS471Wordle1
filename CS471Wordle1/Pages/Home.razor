@@ -1,0 +1,33 @@
+﻿@using WordleBackend.Enums
+@using WordleAPI.Classes
+@inject Login UserLogin
+
+@page "/home"
+
+<EditForm Model="@model">
+    <select @bind="model.gameMode" class="form-select">
+        @foreach (var value in Enum.GetValues(typeof(GameMode)))
+        {
+            <option value="@value">@value</option>
+        }
+    </select>
+
+    <select @bind="model.challenge" class="form-select">
+        @foreach (var value in Enum.GetValues(typeof(Challenge)))
+        {
+            <option value="@value">@value</option>
+        }
+    </select>
+</EditForm>
+
+@code {
+
+    private WordleSelector model = new WordleSelector();
+
+    public class WordleSelector
+    {
+        public long UserID { get; set; }
+        public Challenge challenge { get; set; }
+        public GameMode gameMode { get; set; }
+    }
+}

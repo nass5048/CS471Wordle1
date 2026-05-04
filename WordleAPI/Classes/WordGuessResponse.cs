@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WordleBackend.Enums;
 
 namespace WordleAPI.Classes;
 
@@ -16,29 +17,38 @@ public class WordGuessResponse
     {
 
     }
-
-    public WordGuessResponse(string CorrectWord, string GuessedWord)
+    //Bot cant do challange mode and should only be played against normally
+    public WordGuessResponse(string CorrectWord, string GuessedWord, Challenge challenge, bool isBot)
     {
         Word = GuessedWord;
         Colors = new List<ResponseColor>();
 
         for (int i = 0; i < 5; i++)
         {
-            if (CorrectWord[i] == GuessedWord[i])
-            {
-                Colors.Add(ResponseColor.green);
-            }
-            else if (ShouldYellow(i, GuessedWord, CorrectWord))
-            {
-                Colors.Add(ResponseColor.yellow);
-            }
-            else
-            {
-                Colors.Add(ResponseColor.grey);
+            switch (challenge) {
+                case Challenge.None:
+                case Challenge.HardMode:
+                    if (CorrectWord[i] == GuessedWord[i])
+                    {
+                        Colors.Add(ResponseColor.green);
+                    }
+                    else if (ShouldYellow(i, GuessedWord, CorrectWord))
+                    {
+                        Colors.Add(ResponseColor.yellow);
+                    }
+                    else
+                    {
+                        Colors.Add(ResponseColor.grey);
+                    }
+                    break;
+                case Challenge.AllYellow:
+                    break;
+                case Challenge.AllGreen:
+                    break;
             }
         }
-
     }
+
 
     private bool ShouldYellow(int index, string guess, string correct)
     {

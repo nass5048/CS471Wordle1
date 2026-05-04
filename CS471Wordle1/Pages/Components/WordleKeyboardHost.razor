@@ -190,7 +190,7 @@
         }
 
 
-        var response = new WordGuessResponse(Solution, CurrentGuess);
+        var response = new WordGuessResponse(Solution, CurrentGuess, WordleBackend.Enums.Challenge.None, false);
         Guesses[CurrentRow] = response;
         UpdateKeyboardState(response);
 
