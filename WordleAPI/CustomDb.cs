@@ -3,10 +3,14 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WordleAPI.Classes;
+using WordleBackend.Classes;
 
 namespace WordleAPI;
 public class DataBase
 {
+    public List<DailyWords> DailyWords { get; set; }
+
+
     public List<Stats?> Stats { get; set; }
     public List<Login> Login { get; set; }
 
@@ -15,11 +19,13 @@ public class DataBase
     {
         Stats = new List<Stats?>();
         Login = new List<Login>();
+        DailyWords = new List<DailyWords>();
     }
     public void UpdateStoredDB(DataBase dataBase)
     {
         Stats = dataBase.Stats;
         Login = dataBase.Login;
+        DailyWords = dataBase.DailyWords;
     }
 
     public async Task LoadData(HttpClient Http)

@@ -1,5 +1,6 @@
 ﻿@page "/admin"
 @using WordleAPI.Classes
+@using WordleBackend.Classes
 @using WordleBackend.Enums
 @using WordleAPI
 @inject Login UserLogin
@@ -8,7 +9,109 @@
 
 @if(UserLogin.UserPermission == Permission.Admin)
 {
-    <h3>Admin Panel</h3>
+    <h3 class="mt-4">Admin Panel</h3>
+
+    @if (isLoading)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="text-center mt-3 text-danger">@DailyWordMessage</div>
+        <div class="card p-3 mt-3">
+            <div class="row g-2 mb-3">
+                <div class="col-4">
+                    <input type="date" class="form-control" @bind="newDate" />
+                </div>
+
+                <div class="col-4 position-relative">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search word..."
+                           @bind="wordSearch"
+                           @oninput="FilterWords" />
+
+                    @if (filteredWords.Any())
+                    {
+                        <div class="list-group position-absolute w-100" style="z-index: 1000; max-height: 200px; overflow-y: auto;">
+                            @foreach (var w in filteredWords)
+                            {
+                                <button type="button"
+                                        class="list-group-item list-group-item-action"
+                                        @onclick="() => SelectWord(w)">
+                                    @w
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="col-4">
+                    <button class="btn btn-success w-100" @onclick="AddRecord">Add</button>
+                </div>
+            </div>
+
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Word</th>
+                        <th style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in db.DailyWords.OrderBy(r => r.Date))
+                    {
+                        <tr>
+                            <td>@entry.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@entry.Word</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecord(entry)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card p-3 mt-4">
+            <h5>User Management</h5>
+
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Permissions</th>
+                        <th style="width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in db.Login)
+                    {
+                        <tr>
+                            <td>
+                                <input class="form-control" @bind="user.Username" />
+                            </td>
+
+                            <td>
+                                <select @bind="user.UserPermission" class="form-select">
+                                    @foreach (var mode in Enum.GetValues(typeof(Permission)))
+                                    {
+                                        <option value="@mode">@mode</option>
+                                    }
+                                </select>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-success btn-sm me-2" @onclick="() => SaveUser(user)">Save</button>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteUser(user)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 } 
 else
 {
@@ -16,5 +119,125 @@ else
 }
 
 @code {
+    private DateOnly newDate = DateOnly.FromDateTime(DateTime.Now);
+    private string newWord = "";
+    private bool isLoading = true;
+    private List<string> AvailableWords = new();
 
+    private string wordSearch = "";
+    private List<string> filteredWords = new();
+	private string DailyWordMessage = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        AvailableWords = Utilitys.GetEmbeddedTextResource("WordleWords.txt")
+        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+        .Select(w => w.Trim().ToLowerInvariant())
+        .Where(w => w.Length == 5)
+        .ToList();
+    }
+
+    private async Task LoadData()
+    {
+        isLoading = true;
+        await db.LoadData(Http);
+        newDate = GetFirstAvailableDate();
+
+        isLoading = false;
+    }
+
+    private DateOnly GetFirstAvailableDate()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+
+        // Get all scheduled dates after today
+        var usedDates = db.DailyWords
+            .Where(r => r.Date > today)
+            .Select(r => r.Date)
+            .ToHashSet();
+
+        // Start checking tomorrow
+        var check = today.AddDays(1);
+
+        // Increment until we find a free date
+        while (usedDates.Contains(check))
+        {
+            check = check.AddDays(1);
+        }
+
+        return check;
+    }
+
+    private void FilterWords(ChangeEventArgs e)
+    {
+        wordSearch = e.Value?.ToString() ?? "";
+
+        if (string.IsNullOrWhiteSpace(wordSearch))
+        {
+            filteredWords.Clear();
+            return;
+        }
+
+        filteredWords = AvailableWords
+            .Where(w => w.StartsWith(wordSearch, StringComparison.OrdinalIgnoreCase))
+            .Take(20)
+            .ToList();
+    }
+
+    private void SelectWord(string word)
+    {
+        newWord = word;
+        wordSearch = word;
+        filteredWords.Clear();
+    }
+
+    private async Task AddRecord()
+    {
+        await db.LoadData(Http);
+        if (string.IsNullOrWhiteSpace(newWord))
+		{
+			DailyWordMessage = "Please enter a valid word.";
+            return;
+        }
+        if (db.DailyWords.Any(d => d.Date == newDate))
+        {
+            // Handle duplicate date case
+			DailyWordMessage = "A word is already scheduled for this date.";
+            return;
+        }
+
+        db.DailyWords.Add(new DailyWords
+        {
+            Date = newDate,
+            Word = newWord.Trim().ToLower()
+        });
+
+		await db.SaveData(Http);
+
+        newWord = "";
+		wordSearch = "";
+		filteredWords.Clear();
+		newDate = GetFirstAvailableDate();
+    }
+
+    private async Task DeleteRecord(DailyWords entry)
+    {
+		//await db.LoadData(Http);
+        db.DailyWords.Remove(entry);
+		await db.SaveData(Http);
+        DailyWordMessage = $"Succesfully removed {entry.Word}.";
+    }
+
+    private async Task SaveUser(Login user)
+    {
+		db.UpdateUserData(user);
+		await db.SaveData(Http);
+    }
+
+    private async Task DeleteUser(Login user)
+    {
+		db.Login.Remove(user);
+		await db.SaveData(Http);
+    }
 }
