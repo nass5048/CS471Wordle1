@@ -12,7 +12,7 @@
 
 @if (correctWord != null)
 {
-	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge"/> 
+	  <WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/> 
 	  if(challenge == Challenge.None || challenge == Challenge.HardMode){
 		<div class="top-right">
 
@@ -35,6 +35,8 @@
     public GameMode gameMode { get; set; }
 	[Parameter]
     public Challenge challenge { get; set; }
+
+	
 
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }

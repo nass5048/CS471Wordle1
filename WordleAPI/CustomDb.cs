@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Data;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using WordleAPI.Classes;
 
@@ -18,5 +20,25 @@ public class DataBase
     {
         Stats = dataBase.Stats;
         Login = dataBase.Login;
+    }
+
+    public async Task LoadData(HttpClient Http)
+    {
+        var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
+        if (test != null)
+            UpdateStoredDB(test);
+    }
+    public async Task SaveData(HttpClient Http)
+    {
+        await Http.PostAsJsonAsync("https://localhost:7160/api/data", this);
+    }
+
+    public void UpdateUserData(Login login)
+    {
+        var existingLogin = Login.FirstOrDefault(l => l.UserID == login.UserID);
+        if (existingLogin != null)
+        {
+            existingLogin.SetUserLogin(login);
+        }
     }
 }

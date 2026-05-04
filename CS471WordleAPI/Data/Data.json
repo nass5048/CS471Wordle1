@@ -3,18 +3,48 @@
   "login": [
     {
       "userID": 1,
-      "username": "GuestUser",
-      "password": "password"
+      "username": "mike",
+      "password": "123456",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": null
     },
     {
       "userID": 2,
-      "username": "mike",
-      "password": "123456"
-    },
-    {
-      "userID": 3,
-      "username": "test",
-      "password": "123456"
+      "username": "qqq",
+      "password": "111111",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "userID": 0,
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "lastPlayed": "2026-05-04T00:00:00-04:00",
+        "maxStreak": 0,
+        "dailyGuesses": [
+          {
+            "word": "start",
+            "colors": [
+              2,
+              2,
+              2,
+              1,
+              0
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "robotCount": 0
+      }
     }
   ]
 }

@@ -10,7 +10,7 @@ public class Stats
     public int CurrentStreak { get; set; }
     public DateTime? LastPlayed { get; set; }
     public int MaxStreak { get; set; }
-    public List<WordGuessResponse?> Guesses { get; set; }
+    public List<WordGuessResponse?> DailyGuesses { get; set; }
 
     public int robotCount { get; set; }
     
@@ -37,8 +37,8 @@ public class Stats
             {
                 GamesWon++;
             }
-            Guesses = guesses;
-            if (robotCount <= Guesses.Count(p => p != null))
+            DailyGuesses = guesses;
+            if (robotCount <= DailyGuesses.Count(p => p != null))
             {
                 RobotWins++;
             }

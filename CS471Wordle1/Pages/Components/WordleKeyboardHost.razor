@@ -4,6 +4,10 @@
 @using CS471Wordle1.Pages.Components
 @using Microsoft.AspNetCore.Components.Web
 @using WordleBackend.Enums
+@inject Login UserLogin
+@inject DataBase db
+@inject HttpClient Http
+
 
 <div>@StatusMessage</div>
 <div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
@@ -81,6 +85,9 @@
     [Parameter]
     public Challenge challenge { get; set; }
 
+    [Parameter]
+    public GameMode gameMode { get; set; }
+
 
     private int CurrentRow { get; set; } = 0;
     private string CurrentGuess { get; set; } = "";
@@ -89,24 +96,28 @@
 
     private Dictionary<string, PlayerKeyboard.KeyState> KeyStates { get; set; } = new();
     private HashSet<string> DisabledKeys => BuildDisabledKeys();
-    public Stats stats = new Stats();
+    //public Stats stats = new Stats();
 
     protected override async Task OnInitializedAsync()
     {
         //TODO await stats.LoadAsync();
-
+        await db.LoadData(Http);
         StartNewGame();
 
         // Restore previous game safely (stats.Guesses may be null)
-        if (stats.LastPlayed.HasValue && stats.LastPlayed.Value.Date == DateTime.Today)
+        if (UserLogin.UserStats.LastPlayed.HasValue && UserLogin.UserStats.LastPlayed.Value.Date == DateTime.Today && gameMode == GameMode.Daily)
         {
-            var savedGuesses = stats.Guesses ?? new List<WordGuessResponse?>();
+            var savedGuesses = UserLogin.UserStats.DailyGuesses ?? new List<WordGuessResponse?>();
             Guesses = savedGuesses
                 .Take(6) // in case too many
                 .Concat(Enumerable.Repeat<WordGuessResponse?>(null, 6)) // pad to 6
                 .Take(6) // final length 6
                 .ToList();
             OnGameCompleted.InvokeAsync(null); 
+        }
+        if ((!UserLogin.UserStats.LastPlayed.HasValue || UserLogin.UserStats.LastPlayed.Value.Date != DateTime.Today) && gameMode == GameMode.Daily)
+        {
+            UserLogin.UserStats.LastPlayed = DateTime.Now;
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
     }
@@ -185,7 +196,7 @@
         };
     }
 
-    private void SubmitGuess()
+    private async Task SubmitGuess()
     {
         StatusMessage = "";
         Console.WriteLine($"Submitting guess: {CurrentGuess}");
@@ -217,16 +228,20 @@
         }
 
 
-        
+
         Guesses[CurrentRow] = response;
         UpdateKeyboardState(response);
+        UserLogin.UserStats.DailyGuesses = Guesses;
+        
+        db.UpdateUserData(UserLogin);
+        await db.SaveData(Http);
 
         if (CurrentGuess.Equals(Solution, StringComparison.OrdinalIgnoreCase))
         {
             StatusMessage = $"Solved in {CurrentRow + 1} guess(es)!";
             CurrentRow = 6;
             CurrentGuess = "";
-            stats.FinishGame(true, Guesses);
+            UserLogin.UserStats.FinishGame(true, Guesses);
             OnGameCompleted.InvokeAsync(null);
             return;
         }
@@ -237,7 +252,7 @@
         if (CurrentRow >= 6)
         {
             StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
-            stats.FinishGame(false, Guesses);
+            UserLogin.UserStats.FinishGame(false, Guesses);
             OnGameCompleted.InvokeAsync(null);
         }
     }
