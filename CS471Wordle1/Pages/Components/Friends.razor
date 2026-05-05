@@ -1,0 +1,42 @@
+﻿@using WordleAPI.Classes
+@using WordleAPI
+@using WordleBackend.Classes
+@inject Login UserLogin
+@inject HttpClient Http
+@inject DataBase db
+
+
+@code {
+    private List<FullFriend> friends = new List<FullFriend>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await db.LoadData(Http);
+        db.Login.First(x => x.UserID == UserLogin.UserID);
+
+
+    }
+
+    public async Task AddFriend(FullFriend friend)
+    {
+        await db.LoadData(Http);
+        UserLogin.Friends.Add(new Friend() { Sender = UserLogin.UserID, Accepter = friend.UserID, HasAccepted = false });
+        db.UpdateUserData(UserLogin);
+        await db.SaveData(Http);
+    }
+    public async Task AcceptFreind(FullFriend friend)
+    {
+        await db.LoadData(Http);
+        var temp = db.Login.First(x => x.UserID == friend.UserID);
+        temp.Friends.First(x => x.Sender == friend.UserID && x.Accepter == UserLogin.UserID).HasAccepted = true;
+        UserLogin.Friends.Add(new Friend() { Sender = UserLogin.UserID, Accepter = friend.UserID, HasAccepted = true });
+        db.UpdateUserData(UserLogin);
+        db.UpdateUserData(temp);
+    }
+
+    public class FullFriend
+    {
+        public long UserID { get; set; }
+        public string Username { get; set; }
+    }
+}

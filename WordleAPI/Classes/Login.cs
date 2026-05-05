@@ -23,6 +23,8 @@ public class Login
 
     public Permission UserPermission { get; set; } = Permission.Guest;
 
+    public List<Friend> Friends { get; set; } = new List<Friend>();
+
     public void SetUserLogin(Login login)
     {
         UserID = login.UserID;
@@ -31,5 +33,6 @@ public class Login
         UserSettings = login.UserSettings;
         UserStats = login.UserStats;
         UserPermission = login.UserPermission;
+        Friends = login.Friends;
     }
 }
