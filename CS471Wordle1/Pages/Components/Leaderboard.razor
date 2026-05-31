@@ -1,5 +1,75 @@
-﻿<h3>Leaderboard</h3>
+﻿@page "/leaderboard"
+@using WordleBackend.Classes
+@using WordleAPI
+@inject DataBase db
+@inject HttpClient Http
+
+<h3>Leaderboard</h3>
+
+@if (leaderboard.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Guesses</th>
+                <th>Daily Word Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in leaderboard.Select((x, i) => new { Rank = i + 1, Data = x }))
+            {
+                <tr>
+                    <td>@entry.Rank</td>
+                    <td>@entry.Data.Username</td>
+                    <td>@entry.Data.Guesses</td>
+                    <td>@FormatTime(entry.Data.DailyWordTime)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No leaderboard data available.</p>
+}
 
 @code {
+    [Parameter]
+    public bool IsFriendsOnly { get; set; } = false;
 
+    private List<LeaderboardEntry> leaderboard = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await db.LoadData(Http);
+
+        leaderboard = db.Login
+            .Where(x => x.UserStats.LastPlayed.HasValue && x.UserStats.LastPlayed.Value.Date == DateTime.Today)
+            .Select(s => new LeaderboardEntry
+                {
+                    UserID = s.UserID,
+                    Username = db.Login.FirstOrDefault(u => u.UserID == s.UserID)?.Username ?? "Unknown",
+                    Guesses = (s.UserStats.DailyGuesses ?? new()).Count(g => g != null),
+                    DailyWordTime = s.UserStats.DailyWordTime?.TotalSeconds ?? 0
+                })
+            .OrderBy(x => x.Guesses)
+            .ThenBy(x => x.DailyWordTime)
+            .ToList();
+    }
+
+    private string FormatTime(double seconds)
+    {
+        TimeSpan t = TimeSpan.FromSeconds(seconds);
+        return $"{t.Minutes:D2}:{t.Seconds:D2}";
+    }
+
+    public class LeaderboardEntry
+    {
+        public long UserID { get; set; }
+        public string Username { get; set; }
+        public int Guesses { get; set; }
+        public double DailyWordTime { get; set; }
+    }
 }

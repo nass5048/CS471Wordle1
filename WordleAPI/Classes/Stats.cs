@@ -1,4 +1,6 @@
-﻿namespace WordleAPI.Classes;
+﻿using WordleBackend.Enums;
+
+namespace WordleAPI.Classes;
 
 public class Stats
 {
@@ -7,14 +9,22 @@ public class Stats
     public int RobotWins { get; set; }
     public int RobotLosses { get; set; }
     public int CurrentStreak { get; set; }
-    public DateTime? LastPlayed { get; set; }
+    
     public int MaxStreak { get; set; }
-    public List<WordGuessResponse?> DailyGuesses { get; set; }
+
+
+    public DateTime? LastPlayed { get; set; }
+    public TimeSpan? DailyWordTime { get; set; }
+    public List<WordGuessResponse?>? DailyGuesses { get; set; }
 
     public int robotCount { get; set; }
     
-    public async Task FinishGame(bool win, List<WordGuessResponse?> guesses)
+    public async Task FinishGame(bool win, List<WordGuessResponse?> guesses, GameMode mode)
     {
+        if(mode == GameMode.Daily)
+        {
+            DailyWordTime = DateTime.Now - LastPlayed;
+        }
         //prevents multiple games in one day from counting
         if (!LastPlayed.HasValue || !(LastPlayed.Value.Date == DateTime.Today))
         {

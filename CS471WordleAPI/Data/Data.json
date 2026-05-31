@@ -35,6 +35,10 @@
     {
       "date": "2026-05-29",
       "word": "stabs"
+    },
+    {
+      "date": "2026-05-31",
+      "word": "tests"
     }
   ],
   "login": [
@@ -51,8 +55,9 @@
         "robotWins": 0,
         "robotLosses": 0,
         "currentStreak": 0,
-        "lastPlayed": "2026-05-04T14:43:27.125-04:00",
         "maxStreak": 0,
+        "lastPlayed": "2026-05-04T14:43:27.125-04:00",
+        "dailyWordTime": null,
         "dailyGuesses": [
           {
             "word": "start",
@@ -114,11 +119,22 @@
         "robotWins": 0,
         "robotLosses": 0,
         "currentStreak": 0,
-        "lastPlayed": "2026-05-04T16:26:45.788-04:00",
         "maxStreak": 0,
+        "lastPlayed": "2026-05-31T17:22:43.76-04:00",
+        "dailyWordTime": "00:00:08.0460000",
         "dailyGuesses": [
           {
-            "word": "fucks",
+            "word": "teste",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ]
+          },
+          {
+            "word": "tests",
             "colors": [
               2,
               2,
@@ -127,7 +143,6 @@
               2
             ]
           },
-          null,
           null,
           null,
           null,
@@ -150,9 +165,53 @@
         "robotWins": 0,
         "robotLosses": 0,
         "currentStreak": 0,
-        "lastPlayed": null,
         "maxStreak": 0,
-        "dailyGuesses": null,
+        "lastPlayed": "2026-05-31T17:31:58.583-04:00",
+        "dailyWordTime": "00:00:28.1040000",
+        "dailyGuesses": [
+          {
+            "word": "stare",
+            "colors": [
+              1,
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "word": "finds",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "point",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "word": "tests",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null
+        ],
         "robotCount": 0
       },
       "userPermission": 1

@@ -2,7 +2,9 @@
 @using WordleAPI.Classes
 @using WordleBackend.Enums
 @inject Login UserLogin
+@page "/stats"
 
+<Leaderboard/>
 @if(UserLogin.UserPermission != Permission.Guest)
 	{
 		<div class="top-left">       
