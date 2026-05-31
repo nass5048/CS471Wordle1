@@ -164,5 +164,32 @@
       "receiverID": 1,
       "status": 1
     }
+  ],
+  "bugReports": [
+    {
+      "userID": 2,
+      "type": 1,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 2,
+      "type": 2,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 0,
+      "type": 0,
+      "bugDescription": "teast"
+    },
+    {
+      "userID": 0,
+      "type": 1,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 0,
+      "type": 1,
+      "bugDescription": "test"
+    }
   ]
 }

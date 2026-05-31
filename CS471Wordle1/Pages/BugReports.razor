@@ -1,0 +1,49 @@
+﻿@page "/bugreport"
+@using WordleBackend.Classes
+@using WordleBackend.Enums
+@using WordleAPI
+@using WordleAPI.Classes
+@inject Login UserLogin
+@inject HttpClient Http
+@inject DataBase db
+
+<h4>Reported Bugs</h4>
+
+@if (bugReports.Any())
+{
+    @foreach (var bug in bugReports)
+    {
+        <div class="card p-3 my-2">
+            <b>Type:</b> @bug.Type <br />
+            <b>Reported By:</b> @GetUsername(bug.UserID) <br />
+            <b>Description:</b>
+            <div>@bug.BugDescription</div>
+        </div>
+    }
+}
+else
+{
+    <p>No bugs reported yet.</p>
+}
+
+@code {
+    private List<BugReport> bugReports = new();
+    private BugReport newBug = new BugReport();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBugs();
+    }
+
+    private async Task LoadBugs()
+    {
+        await db.LoadData(Http);
+        bugReports = db.BugReports.ToList();
+    }
+
+    private string GetUsername(long id)
+    {
+        var user = db.Login.FirstOrDefault(x => x.UserID == id);
+        return user?.Username ?? "Unknown";
+    }
+}

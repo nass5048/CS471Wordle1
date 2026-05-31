@@ -14,6 +14,7 @@
 
     <main>
         <div class="top-row px-4">
+            <ReportBug />
             <div>@UserLogin.Username</div>
             @if (UserLogin.UserID ==0)
             {
@@ -23,8 +24,9 @@
             {
                 <button class="ml-auto" @onclick="Logout">Logout</button>
             }
+            
         </div>
-        
+
         <article class="content px-4 parent">
             @Body
         </article>
