@@ -1,0 +1,216 @@
+﻿@page "/friends"
+@using WordleAPI.Classes
+@using WordleAPI
+@using WordleBackend.Classes
+@using WordleBackend.Enums
+@inject Login UserLogin
+@inject HttpClient Http
+@inject DataBase db
+
+<h3>Friends</h3>
+
+<input @bind="searchText" placeholder="Search users..." class="form-control" />
+<button class="btn btn-primary mt-2" @onclick="SearchUsers">Search</button>
+
+@if (searchResults.Any())
+{
+    <h4 class="mt-3">Search Results</h4>
+    @foreach (var user in searchResults)
+    {
+        <div class="card p-2 my-1">
+            <b>@user.Username</b>
+
+            @if (IsAlreadyFriends(user.UserID))
+            {
+                <span class="text-success ms-2">Already Friends</span>
+            }
+            else if (HasPendingRequest(user.UserID))
+            {
+                <span class="text-warning ms-2">Request Pending</span>
+            }
+            else
+            {
+                <button class="btn btn-sm btn-success ms-2" @onclick="() => AddFriend(user)">
+                    Add Friend
+                </button>
+            }
+        </div>
+    }
+}
+
+<hr />
+
+<h4>Your Friends</h4>
+@if (friends.Any())
+{
+    @foreach (var f in friends)
+    {
+        <div class="card p-2 my-1">
+            @f.Username
+        </div>
+    }
+}
+else
+{
+    <p>No friends yet.</p>
+}
+
+<hr />
+
+<h4>Incoming Friend Requests</h4>
+@if (incomingRequests.Any())
+{
+    @foreach (var req in incomingRequests)
+    {
+        <div class="card p-2 my-1">
+            <b>@req.Username</b>
+            <button class="btn btn-sm btn-primary ms-2" @onclick="() => AcceptFriend(req)">
+                Accept
+            </button>
+            <button class="btn btn-sm btn-danger ms-2" @onclick="() => RejectFriend(req)">
+                Reject
+            </button>
+        </div>
+    }
+}
+else
+{
+    <p>No incoming requests.</p>
+}
+
+<hr />
+
+<h4>Outgoing Friend Requests</h4>
+@if (outgoingRequests.Any())
+{
+    @foreach (var req in outgoingRequests)
+    {
+        <div class="card p-2 my-1">
+            <b>@req.Username</b> <span class="text-warning">Pending</span>
+        </div>
+    }
+}
+else
+{
+    <p>No outgoing requests.</p>
+}
+
+@code {
+    private string searchText = "";
+    private List<FullFriend> searchResults = new();
+    private List<FullFriend> friends = new();
+    private List<FullFriend> incomingRequests = new();
+    private List<FullFriend> outgoingRequests = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFriendData();
+    }
+
+    private async Task LoadFriendData()
+    {
+        await db.LoadData(Http);
+
+        // Build friends list
+        friends = db.FriendRequests
+            .Where(r => r.Status == FriendRequestStatus.Accepted &&
+                       (r.SenderID == UserLogin.UserID || r.ReceiverID == UserLogin.UserID))
+            .Select(r => GetUser(r.SenderID == UserLogin.UserID ? r.ReceiverID : r.SenderID))
+            .ToList();
+
+        // Incoming pending
+        incomingRequests = db.FriendRequests
+            .Where(r => r.Status == FriendRequestStatus.Pending &&
+                        r.ReceiverID == UserLogin.UserID)
+            .Select(r => GetUser(r.SenderID))
+            .ToList();
+
+        // Outgoing pending
+        outgoingRequests = db.FriendRequests
+            .Where(r => r.Status == FriendRequestStatus.Pending &&
+                        r.SenderID == UserLogin.UserID)
+            .Select(r => GetUser(r.ReceiverID))
+            .ToList();
+    }
+
+    private FullFriend GetUser(long id)
+    {
+        var user = db.Login.First(x => x.UserID == id);
+        return new FullFriend { UserID = user.UserID, Username = user.Username };
+    }
+
+    private async Task SearchUsers()
+    {
+        await db.LoadData(Http);
+
+        searchResults = db.Login
+            .Where(x => x.Username.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                        && x.UserID != UserLogin.UserID)
+            .Select(x => new FullFriend { UserID = x.UserID, Username = x.Username })
+            .ToList();
+    }
+
+    public async Task AddFriend(FullFriend friend)
+    {
+        await db.LoadData(Http);
+
+        db.FriendRequests.Add(new FriendRequest()
+        {
+            SenderID = UserLogin.UserID,
+            ReceiverID = friend.UserID,
+            Status = FriendRequestStatus.Pending
+        });
+
+        await db.SaveData(Http);
+        await LoadFriendData();
+    }
+
+    public async Task AcceptFriend(FullFriend friend)
+    {
+        await db.LoadData(Http);
+
+        var req = db.FriendRequests.FirstOrDefault(x =>
+            x.SenderID == friend.UserID &&
+            x.ReceiverID == UserLogin.UserID &&
+            x.Status == FriendRequestStatus.Pending);
+
+        if (req != null)
+        {
+            req.Status = FriendRequestStatus.Accepted;
+            await db.SaveData(Http);
+        }
+
+        await LoadFriendData();
+    }
+
+    public async Task RejectFriend(FullFriend friend)
+    {
+        await db.LoadData(Http);
+
+        var req = db.FriendRequests.FirstOrDefault(x =>
+            x.SenderID == friend.UserID &&
+            x.ReceiverID == UserLogin.UserID &&
+            x.Status == FriendRequestStatus.Pending);
+
+        if (req != null)
+        {
+            req.Status = FriendRequestStatus.Rejected;
+            await db.SaveData(Http);
+        }
+
+        await LoadFriendData();
+    }
+
+    private bool IsAlreadyFriends(long id) =>
+        friends.Any(f => f.UserID == id);
+
+    private bool HasPendingRequest(long id) =>
+        incomingRequests.Any(f => f.UserID == id) ||
+        outgoingRequests.Any(f => f.UserID == id);
+
+    public class FullFriend
+    {
+        public long UserID { get; set; }
+        public string Username { get; set; }
+    }
+}

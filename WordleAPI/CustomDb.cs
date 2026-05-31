@@ -14,18 +14,22 @@ public class DataBase
     //public List<Stats?> Stats { get; set; }
     public List<Login> Login { get; set; }
 
+    public List<FriendRequest> FriendRequests { get; set; }
+
     // Optionally pass a basePath from the host (for example IWebHostEnvironment.ContentRootPath)
     public DataBase()
     {
         //Stats = new List<Stats?>();
         Login = new List<Login>();
         DailyWords = new List<DailyWords>();
+        FriendRequests = new List<FriendRequest>();
     }
     public void UpdateStoredDB(DataBase dataBase)
     {
         //Stats = dataBase.Stats;
         Login = dataBase.Login;
         DailyWords = dataBase.DailyWords;
+        FriendRequests = dataBase.FriendRequests;
     }
 
     public async Task LoadData(HttpClient Http)
