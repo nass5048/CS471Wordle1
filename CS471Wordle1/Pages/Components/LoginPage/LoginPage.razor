@@ -3,11 +3,13 @@
 @using WordleAPI
 @using WordleAPI.Classes
 @using System.ComponentModel.DataAnnotations
+@using WordleBackend
 @inject Services.SpinnerService SpinnerService
 @inject DataBase db
 @inject HttpClient Http
 @inject Login UserLogin
 @inject NavigationManager NavigationManager
+@inject BrowserStorage BrowserStorage
 
 <EditForm Model="model" OnValidSubmit="Login">
 
@@ -57,6 +59,7 @@
             if (login.Username == model.Username && login.Password == model.Password)
             {
                 UserLogin.SetUserLogin(login);
+                await BrowserStorage.Set("userId", UserLogin.UserID.ToString());
                 SpinnerService.Hide();
                 if(UserLogin.UserPermission == Permission.Admin)
                 {

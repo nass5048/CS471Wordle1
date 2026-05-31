@@ -14,4 +14,8 @@
     <EmbeddedResource Include="WordleWords.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.JSInterop" Version="8.0.27" />
+  </ItemGroup>
+
 </Project>

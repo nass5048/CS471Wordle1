@@ -65,7 +65,11 @@
     string ConfirmPassword = "";
 	string NewUsername = "";
     string Message = "";
-
+    protected override async Task OnInitializedAsync()
+    {
+        await db.LoadData(Http);
+        await base.OnInitializedAsync();
+    }
     async Task ResetPassword()
     {
         if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))

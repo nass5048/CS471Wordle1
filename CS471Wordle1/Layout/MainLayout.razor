@@ -2,9 +2,13 @@
 @using WordleAPI
 @using WordleAPI.Classes
 @using CS471Wordle1.Pages.Components
+@using WordleBackend
 @inject Login UserLogin
 @inject NavigationManager NavigationManager
 @inject Services.SpinnerService SpinnerService
+@inject DataBase db
+@inject HttpClient Http
+@inject BrowserStorage BrowserStorage
 
 <Spinner ShowSpinner="showSpinner" />
 <div class="page">
@@ -42,8 +46,23 @@
     private bool showSpinner = false;
     public bool LoggedIn { get; set; } = false;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await db.LoadData(Http);
+
+        var storedId = await BrowserStorage.Get("userId");
+
+        if (!string.IsNullOrEmpty(storedId))
+        {
+            long id = long.Parse(storedId);
+
+            var user = db.Login.FirstOrDefault(x => x.UserID == id);
+
+            if (user != null)
+            {
+                UserLogin.SetUserLogin(user);
+            }
+        }
         // initialize state and subscribe to changes
         showSpinner = SpinnerService.IsShowing;
         SpinnerService.OnChange += SpinnerChanged;
@@ -75,10 +94,14 @@
         NavigationManager.NavigateTo("/login");
         
     }
-    void Logout()
+    async Task Logout()
     {
         UserLogin.SetUserLogin(new Login());
         LoggedIn = false;
+        await BrowserStorage.Remove("userId");
+        UserLogin.UserID = 0;
+        UserLogin.Username = null;
+
         StateHasChanged();
         NavigationManager.NavigateTo("/");
         
