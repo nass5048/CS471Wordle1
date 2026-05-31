@@ -12,6 +12,7 @@ public class Stats
     
     public int MaxStreak { get; set; }
 
+    public decimal AverageGuesses { get; set; }
 
     public DateTime? LastPlayed { get; set; }
     public TimeSpan? DailyWordTime { get; set; }
@@ -24,6 +25,7 @@ public class Stats
         if(mode == GameMode.Daily)
         {
             DailyWordTime = DateTime.Now - LastPlayed;
+
         }
         //prevents multiple games in one day from counting
         if (!LastPlayed.HasValue || !(LastPlayed.Value.Date == DateTime.Today))

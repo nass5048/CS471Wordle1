@@ -4,23 +4,47 @@
 @inject Login UserLogin
 @page "/stats"
 
-<Leaderboard/>
-@if(UserLogin.UserPermission != Permission.Guest)
-	{
-		<div class="top-left">       
-			<StatsViewer />
-		</div>
-		
-	}
+<div class="stats-layout">
+
+    <div class="stats-panel">
+        @if (UserLogin.UserPermission != Permission.Guest)
+        {
+            <StatsViewer />
+        }
+    </div>
+
+    <div class="leaderboard-panel">
+        <Leaderboard IsFriendsOnly="false" Style="width: 400px;" />
+
+        @if (UserLogin.UserPermission != Permission.Guest)
+        {
+            <Leaderboard IsFriendsOnly="true" Style="width: 400px; margin-top: 20px;" />
+        }
+    </div>
+
+</div>
 
 <style>
-    .top-left {
-        position: absolute;
+    .stats-layout {
+        display: flex;
+        gap: 30px;
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .stats-panel {
+        position: sticky;
         top: 20px;
-        left: 20px;
-        z-index: 9999;
+        height: fit-content;
+    }
+
+    .leaderboard-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 </style>
+
 @code {
 
 }
