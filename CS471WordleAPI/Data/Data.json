@@ -39,6 +39,10 @@
     {
       "date": "2026-05-31",
       "word": "tests"
+    },
+    {
+      "date": "2026-06-01",
+      "word": "alone"
     }
   ],
   "login": [
@@ -122,21 +126,21 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-05-31T17:22:43.76-04:00",
-        "dailyWordTime": "00:00:08.0460000",
+        "lastPlayed": "2026-06-01T19:29:13.233-04:00",
+        "dailyWordTime": "00:00:05.2870000",
         "dailyGuesses": [
           {
-            "word": "teste",
+            "word": "stare",
             "colors": [
-              2,
-              2,
-              2,
-              2,
-              0
+              0,
+              0,
+              1,
+              0,
+              2
             ]
           },
           {
-            "word": "tests",
+            "word": "alone",
             "colors": [
               2,
               2,
@@ -169,41 +173,41 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-05-31T17:31:58.583-04:00",
-        "dailyWordTime": "00:00:28.1040000",
+        "lastPlayed": "2026-06-01T19:29:32.607-04:00",
+        "dailyWordTime": "00:00:08.8130000",
         "dailyGuesses": [
           {
-            "word": "stare",
-            "colors": [
-              1,
-              1,
-              0,
-              0,
-              1
-            ]
-          },
-          {
-            "word": "finds",
+            "word": "fucks",
             "colors": [
               0,
               0,
               0,
               0,
-              2
-            ]
-          },
-          {
-            "word": "point",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              1
+              0
             ]
           },
           {
             "word": "tests",
+            "colors": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "along",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              0
+            ]
+          },
+          {
+            "word": "alone",
             "colors": [
               2,
               2,
