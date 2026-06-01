@@ -56,6 +56,7 @@
         "robotLosses": 0,
         "currentStreak": 0,
         "maxStreak": 0,
+        "averageGuesses": 0,
         "lastPlayed": "2026-05-04T14:43:27.125-04:00",
         "dailyWordTime": null,
         "dailyGuesses": [
@@ -120,6 +121,7 @@
         "robotLosses": 0,
         "currentStreak": 0,
         "maxStreak": 0,
+        "averageGuesses": 0,
         "lastPlayed": "2026-05-31T17:22:43.76-04:00",
         "dailyWordTime": "00:00:08.0460000",
         "dailyGuesses": [
@@ -166,6 +168,7 @@
         "robotLosses": 0,
         "currentStreak": 0,
         "maxStreak": 0,
+        "averageGuesses": 0,
         "lastPlayed": "2026-05-31T17:31:58.583-04:00",
         "dailyWordTime": "00:00:28.1040000",
         "dailyGuesses": [
@@ -212,6 +215,28 @@
           null,
           null
         ],
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 4,
+      "username": "abc",
+      "password": "123456",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
         "robotCount": 0
       },
       "userPermission": 1
