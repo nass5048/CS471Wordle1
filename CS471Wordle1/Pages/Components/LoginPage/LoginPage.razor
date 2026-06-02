@@ -51,7 +51,7 @@
 
         message = $"Attempting login for {model.Username}";
         SpinnerService.Show();
-        var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
+        var test = await Http.GetFromJsonAsync<DataBase>("http://localhost:7160/api/data");
         if (test != null)
             db.UpdateStoredDB(test);
         foreach (var login in db.Login)
