@@ -28,6 +28,15 @@ public class Guesser
 
     public List<WordGuessResponse> FailedGuesses { get; set; } = new List<WordGuessResponse>();
 
+    /*
+        Function Name: Guesser
+        Input: correct Wordle
+        Output: new Guesser object
+        Brief Description:
+            Initializes AI and continously generates guesses until it guesses
+            the word = correctly
+    */
+
     public Guesser(string correctWord)
     {
         getWords();
@@ -40,6 +49,14 @@ public class Guesser
                 solved = true;
         }
     }
+
+    /*
+        Function Name: GuessWord
+        Input: correct Wordle
+        Output: AI's best guess of the word
+        Brief Description:
+            Filters invalid guesses, ranks guesses and returns the best guess
+    */
 
     public string GuessWord(string correctWord)
     {
@@ -56,17 +73,41 @@ public class Guesser
         return bestGuess.Word;
     }
 
+    /*
+        Function Name: getWords
+        Input: N/A
+        Output: N/A
+        Brief Description:
+            Resets word list using the Wordle dictionary
+    */
+   
     public void getWords()
     {
         // Copy full normalized list to working list
         ValidWords = new List<string>(AllWords);
     }
 
+    /*
+        Function Name: RemoveFailureWords
+        Input: N/A
+        Output: N/A
+        Brief Description:
+            Removes words that violate green, yellow, and grey letter constraints
+            discovered from previous guesses
+    */
+
     public void RemoveFailureWords()
     {
+        // Tracks letters that must appear in future guesses 
         var requiredLetters = new HashSet<char>();
+
+        // Tracks letters that can't appear in future guesses (grey)
         var forbiddenLetters = new HashSet<char>();
+
+        // Stores correct character positions (green)
         var positionConstraints = new char?[5];
+
+        // Stores positions of letters that can't appear (yellow)
         var excludedPositions = new Dictionary<int, HashSet<char>>();
 
         foreach (var fail in FailedGuesses)
@@ -135,12 +176,29 @@ public class Guesser
             .ToList();
     }
 
+    /*
+        Function Name: GetBestLetterLocation
+        Input: location of character
+        Output: Common position of letter
+        Brief Description:
+            Finds the highest-frequency character at a specified word location
+    */
+
     public LetterLocation GetBestLetterLocation(int location)
     {
         var validLetters = CharacterDictionary.Where(t => t.Location == location);
         var letter = validLetters.OrderByDescending(t => t.Count).First();
         return new LetterLocation(letter.Character, location);
     }
+
+    /*
+        Function Name: RankWords
+        Input: N/A
+        Output: ranked word
+        Brief Description:
+            Ranks remaining valid word based on character occurance.
+            More common letters = higher score, Duplicate letters = lower rank
+    */
 
     public void RankWords()
     {
@@ -158,12 +216,21 @@ public class Guesser
                 if (charCount.TryGetValue(c, out long count))
                     rank += count;
 
+            // Penalize words that contain duplicate letters
             if (!IsWordUniqueChar(word))
                 rank /= 2; // penalize duplicates
 
             return new RankedWord(rank, word);
         }).ToList();
     }
+
+    /*
+        Function Name: IsWordUniqueChar
+        Input: word
+        Output: True if characters are unique, false otherwise
+        Brief Description:
+            Determines whether a word is unique
+    */
 
     public bool IsWordUniqueChar(string word)
     {

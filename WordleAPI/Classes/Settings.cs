@@ -8,7 +8,7 @@ namespace WordleBackend.Classes
 {
     public class Settings
     {
-        //this shoudl be betwen 0 and 100
+        // Audio volume level (between 0 and 100)
         public int Volume { get; set; } = 100;
     }
 }

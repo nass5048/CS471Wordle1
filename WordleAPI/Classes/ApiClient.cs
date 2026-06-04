@@ -10,6 +10,14 @@ public class ApiClient
     private readonly string _baseAddress;
     private readonly string? _proxyPrefix;
 
+    /*
+        Function Name: ApiClient
+        Input: baseAddress and proxy (optional)
+        Output: new ApiClient object
+        Brief Description:
+            Initializes HTTP client and configures request headers for JSON files
+    */
+
     public ApiClient(string baseAddress, string? proxyPrefix = null)
     {
         _baseAddress = baseAddress.TrimEnd('/') + "/";
@@ -18,6 +26,14 @@ public class ApiClient
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
+
+    /*
+        Function Name: GetDataAsync
+        Input: API endpoint
+        Output: JSON file content
+        Brief Description:
+            Sends HTTP GET request to the inputted endpoint and returns data (if successful)
+    */
 
     public async Task<string> GetDataAsync(string endpoint)
     {
