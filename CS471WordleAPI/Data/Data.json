@@ -13,8 +13,16 @@
       "word": "tests"
     },
     {
+      "date": "2026-05-10",
+      "word": "fucks"
+    },
+    {
       "date": "2026-05-11",
       "word": "wilds"
+    },
+    {
+      "date": "2026-05-04",
+      "word": "fucks"
     },
     {
       "date": "2026-05-09",
@@ -23,6 +31,18 @@
     {
       "date": "2026-05-05",
       "word": "child"
+    },
+    {
+      "date": "2026-05-29",
+      "word": "stabs"
+    },
+    {
+      "date": "2026-05-31",
+      "word": "tests"
+    },
+    {
+      "date": "2026-06-01",
+      "word": "alone"
     }
   ],
   "login": [
@@ -89,8 +109,7 @@
         ],
         "robotCount": 0
       },
-      "userPermission": 2,
-      "friends": []
+      "userPermission": 2
     },
     {
       "userID": 2,
@@ -111,13 +130,23 @@
         "dailyWordTime": "00:00:05.2870000",
         "dailyGuesses": [
           {
-            "word": "fucks",
+            "word": "stare",
             "colors": [
               0,
               0,
               1,
               0,
-              0
+              2
+            ]
+          },
+          {
+            "word": "alone",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
             ]
           },
           null,
@@ -193,6 +222,62 @@
         "robotCount": 0
       },
       "userPermission": 1
+    },
+    {
+      "userID": 4,
+      "username": "abc",
+      "password": "123456",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
+    }
+  ],
+  "friendRequests": [
+    {
+      "senderID": 2,
+      "receiverID": 1,
+      "status": 1
+    }
+  ],
+  "bugReports": [
+    {
+      "userID": 2,
+      "type": 1,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 2,
+      "type": 2,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 0,
+      "type": 0,
+      "bugDescription": "teast"
+    },
+    {
+      "userID": 0,
+      "type": 1,
+      "bugDescription": "test"
+    },
+    {
+      "userID": 0,
+      "type": 1,
+      "bugDescription": "test"
     }
   ]
 }

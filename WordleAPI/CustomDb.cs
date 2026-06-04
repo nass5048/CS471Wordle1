@@ -61,7 +61,7 @@ public class DataBase
 
     public async Task LoadData(HttpClient Http)
     {
-        var test = await Http.GetFromJsonAsync<DataBase>("http://localhost:7160/api/data");
+        var test = await Http.GetFromJsonAsync<DataBase>("https://localhost:7160/api/data");
         if (test != null)
             UpdateStoredDB(test);
     }
@@ -76,7 +76,7 @@ public class DataBase
 
     public async Task SaveData(HttpClient Http)
     {
-        await Http.PostAsJsonAsync("http://localhost:7160/api/data", this);
+        await Http.PostAsJsonAsync("https://localhost:7160/api/data", this);
     }
 
     /*
