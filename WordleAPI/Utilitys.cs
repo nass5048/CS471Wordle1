@@ -12,8 +12,18 @@ namespace WordleAPI;
 
 public static class Utilitys
 {
+    /*
+        Function Name: GetEmbeddedTextResource
+        Input: resourceName
+        Output: Items contained in resourceName as a string
+        Brief description:
+            Retrieves and returns items contained of text file 
+            embedded into app
+    */
     public static string GetEmbeddedTextResource(string resourceName)
     {
+
+        
         // Get the assembly where the resource is embedded
         var assembly = Assembly.GetExecutingAssembly();
 
@@ -22,18 +32,30 @@ public static class Utilitys
         // You can find the exact name using assembly.GetManifestResourceNames() if unsure.
         string fullResourceName = $"{assembly.GetName().Name}.{resourceName}";
 
+        // Open embedded resource stream
         using (Stream stream = assembly.GetManifestResourceStream(fullResourceName))
         {
+            // Checks if resource exists before attempting to read
             if (stream == null)
             {
                 throw new FileNotFoundException($"Embedded resource '{fullResourceName}' not found.");
             }
+
+            // Reads and returns contenets
             using (StreamReader reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd();
             }
         }
     }
+
+    /*
+        Function Name: IsWordInText
+        Input: word and resourceName
+        Output: true if searched word is exists in the file, false otherwise
+        Brief description:
+            Reads word list from resourceName and checks if word input exists
+    */    
 
     public static bool IsWordInText(string word, string resourceName)
     {
@@ -46,7 +68,7 @@ public static class Utilitys
             .Select(w => w.Trim().ToLowerInvariant())
             .ToHashSet(); // faster lookups
 
-        // Normalize input too
+        // Normalize input 
         string normalizedWord = word.Trim().ToLowerInvariant();
 
         return validWords.Contains(normalizedWord);
