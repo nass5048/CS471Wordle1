@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordleBackend.Enums
 {
+    // Status of Friend Requests
     public enum FriendRequestStatus
     {
         Pending,

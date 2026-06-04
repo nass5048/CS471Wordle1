@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WordleBackend.Enums
 {
+    // Types of challenge modes
     public enum Challenge
     {
         None,

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordleBackend.Enums
 {
+    // Types of permissions available in app
     public enum Permission
     {
         Guest,
