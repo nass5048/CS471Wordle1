@@ -13,20 +13,8 @@
       "word": "tests"
     },
     {
-      "date": "2026-05-10",
-      "word": "fucks"
-    },
-    {
       "date": "2026-05-11",
       "word": "wilds"
-    },
-    {
-      "date": "2026-05-04",
-      "word": "fucks"
-    },
-    {
-      "date": "2026-05-09",
-      "word": "child"
     },
     {
       "date": "2026-05-05",
@@ -43,12 +31,28 @@
     {
       "date": "2026-06-01",
       "word": "alone"
+    },
+    {
+      "date": "0001-01-01",
+      "word": "wheel"
+    },
+    {
+      "date": "2026-06-04",
+      "word": "kebab"
+    },
+    {
+      "date": "2026-06-05",
+      "word": "jumps"
+    },
+    {
+      "date": "2026-05-10",
+      "word": "water"
     }
   ],
   "login": [
     {
       "userID": 1,
-      "username": "admin",
+      "username": "urmom",
       "password": "admins",
       "userSettings": {
         "volume": 100
@@ -61,13 +65,53 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-05-04T14:43:27.125-04:00",
-        "dailyWordTime": null,
+        "lastPlayed": "2026-06-04T17:21:19.036-04:00",
+        "dailyWordTime": "00:08:39.4260000",
         "dailyGuesses": [
           {
-            "word": "start",
+            "word": "ocean",
             "colors": [
+              0,
+              0,
               1,
+              2,
+              0
+            ]
+          },
+          {
+            "word": "renal",
+            "colors": [
+              0,
+              2,
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "word": "desks",
+            "colors": [
+              0,
+              2,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "word": "kebab",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "word": "clown",
+            "colors": [
+              0,
               0,
               0,
               0,
@@ -75,37 +119,15 @@
             ]
           },
           {
-            "word": "allow",
+            "word": "heads",
             "colors": [
               0,
-              0,
+              2,
               0,
               0,
               0
             ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              2
-            ]
-          },
-          {
-            "word": "fucks",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          null,
-          null
+          }
         ],
         "robotCount": 0
       },
@@ -126,21 +148,11 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-06-01T19:29:13.233-04:00",
-        "dailyWordTime": "00:00:05.2870000",
+        "lastPlayed": "2026-06-04T17:31:30.711-04:00",
+        "dailyWordTime": "00:02:58.2300000",
         "dailyGuesses": [
           {
-            "word": "stare",
-            "colors": [
-              0,
-              0,
-              1,
-              0,
-              2
-            ]
-          },
-          {
-            "word": "alone",
+            "word": "kebab",
             "colors": [
               2,
               2,
@@ -149,65 +161,8 @@
               2
             ]
           },
-          null,
-          null,
-          null,
-          null
-        ],
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 3,
-      "username": "test",
-      "password": "123456",
-      "userSettings": {
-        "volume": 100
-      },
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "lastPlayed": "2026-06-01T19:29:32.607-04:00",
-        "dailyWordTime": "00:00:08.8130000",
-        "dailyGuesses": [
           {
-            "word": "fucks",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "along",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              0
-            ]
-          },
-          {
-            "word": "alone",
+            "word": "kebab",
             "colors": [
               2,
               2,
@@ -216,8 +171,46 @@
               2
             ]
           },
-          null,
-          null
+          {
+            "word": "kebab",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "word": "kebab",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "word": "kebab",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "word": "clown",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
         ],
         "robotCount": 0
       },
@@ -244,12 +237,39 @@
         "robotCount": 0
       },
       "userPermission": 1
+    },
+    {
+      "userID": 5,
+      "username": "mymom",
+      "password": "abc123",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
     }
   ],
   "friendRequests": [
     {
       "senderID": 2,
       "receiverID": 1,
+      "status": 1
+    },
+    {
+      "senderID": 5,
+      "receiverID": 2,
       "status": 1
     }
   ],
@@ -278,6 +298,11 @@
       "userID": 0,
       "type": 1,
       "bugDescription": "test"
+    },
+    {
+      "userID": 1,
+      "type": 2,
+      "bugDescription": "broke my foot. can\u0027t dance"
     }
   ]
 }
