@@ -7,10 +7,26 @@ public class DataController : ControllerBase
 {
     private readonly IWebHostEnvironment _env;
 
+    /*
+        Function Name: DataController
+        Input: Hosting env info
+        Output: new DataController object
+        Brief description:
+            Initializes conrtoller and provides acess to app's root directory
+    */
+
     public DataController(IWebHostEnvironment env)
     {
         _env = env;
     }
+
+    /*
+        Function Name: Read
+        Input: N/A
+        Output: data stores in Data.json
+        Brief description:
+            Reads app data from database file and returns to client
+    */
 
     [HttpGet]
     public IActionResult Read()
@@ -19,6 +35,14 @@ public class DataController : ControllerBase
         var json = System.IO.File.ReadAllText(path);
         return Content(json, "application/json");
     }
+
+    /*
+        Function Name: Write
+        Input: app data from client
+        Output: Ok() response that file was updated
+        Brief description:
+            Serializes new data and stores in Data.json
+    */    
 
     [HttpPost]
     public IActionResult Write([FromBody] object data)
