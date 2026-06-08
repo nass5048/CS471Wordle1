@@ -146,7 +146,7 @@ else
         searchResults = db.Login
             .Where(x => x.Username.Contains(searchText, StringComparison.OrdinalIgnoreCase)
                         && x.UserID != UserLogin.UserID 
-                        && (x.UserPermission != Permission.Admin || x.UserPermission != Permission.Guest))
+                        && x.UserPermission == Permission.User)
             .Select(x => new FullFriend { UserID = x.UserID, Username = x.Username })
             .ToList();
     }
