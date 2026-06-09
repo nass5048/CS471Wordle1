@@ -259,6 +259,28 @@
         "robotCount": 0
       },
       "userPermission": 1
+    },
+    {
+      "userID": 5,
+      "username": "jeanna359",
+      "password": "cat123",
+      "userSettings": {
+        "volume": 100
+      },
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
     }
   ],
   "friendRequests": [
