@@ -20,9 +20,6 @@ public class Login
     // Identifies user's password used for login and account changes
     public string Password { get; set; } //TODO need to implement hash and salt for security
 
-    // Stores user settings/preferences
-    public Settings UserSettings { get; set; } = new Settings();
-
     // Stores user statistics
     public Stats UserStats { get; set; } = new Stats();
 
@@ -43,7 +40,6 @@ public class Login
         UserID = login.UserID;
         Username = login.Username;
         Password = login.Password;
-        UserSettings = login.UserSettings;
         UserStats = login.UserStats;
         UserPermission = login.UserPermission;
     }

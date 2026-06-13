@@ -9,9 +9,9 @@
 @inject HttpClient Http
 
 
-<div>@StatusMessage</div>
-<div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
 
+<div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
+    <div>@StatusMessage</div>
 
     <div style="display:contents; padding:8px; background:#f3f3f3; border-radius:6px;">
         @for (int r = 0; r < 6; r++)
@@ -202,6 +202,7 @@
         Console.WriteLine($"Submitting guess: {CurrentGuess}");
         var response = new WordGuessResponse(Solution, CurrentGuess, challenge, false);
 
+        // For hard mode, enforce that all previously revealed hints are used in subsequent guesses
         if(challenge == Challenge.HardMode && CurrentRow != 0)
         {
             var index = 0;
@@ -210,20 +211,22 @@
 
                 if (color == ResponseColor.green && response.Colors[index] != ResponseColor.green)
                 {
-                    StatusMessage = "NotValidWord";
+                    StatusMessage = "Your not using your green letters in the correct places";
                     return;
                 }
                 if (color == ResponseColor.yellow && !response.Word.Contains(Guesses[CurrentRow - 1].Word[index]))
                 {
-                    StatusMessage = "NotValidWord";
+                    StatusMessage = "Your not Using 1 of your yellow letters";
                     return;
                 }
                 index++;
             }
         }
 
+        //Checks to see if the guess is valid: 5 letters, not past the last row, and is a real word
         if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !Utilitys.IsWordInText(CurrentGuess, "WordleWords.txt"))
         {
+            StatusMessage = "Not Valid Word";
             return;
         }
 

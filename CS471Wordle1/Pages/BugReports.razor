@@ -46,4 +46,13 @@ else
         var user = db.Login.FirstOrDefault(x => x.UserID == id);
         return user?.Username ?? "Unknown";
     }
+
+    private async Task DeleteBug(BugReport bug)
+    {
+        await db.LoadData(Http);
+
+
+
+        await db.SaveData(Http);
+    }
 }

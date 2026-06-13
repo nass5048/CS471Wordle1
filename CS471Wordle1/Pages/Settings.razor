@@ -10,17 +10,6 @@
         <div class="card p-4 shadow" style="width: 420px;">
             <h3 class="text-center mb-4">Settings</h3>
 
-            <!-- Volume Section -->
-            <div class="mb-4">
-                <label class="form-label fw-bold">Volume: @UserLogin.UserSettings.Volume%</label>
-                <input type="range"
-                       class="form-range"
-                       min="0" max="100"
-                       @bind="UserLogin.UserSettings.Volume" @bind:after="UpdateVolume" />
-            </div>
-
-            <hr />
-
             <!-- Reset Username Section -->
             <h5 class="fw-bold mb-3">Reset Username</h5>
 
@@ -112,12 +101,5 @@
         await db.SaveData(Http);
         Message = "Username successfully reset.";
 		StateHasChanged();
-    }
-
-    async Task UpdateVolume()
-    {
-        await db.LoadData(Http);
-        db.UpdateUserData(UserLogin);
-        await db.SaveData(Http);
     }
 }
