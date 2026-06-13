@@ -2,11 +2,13 @@
 @using WordleAPI
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
+@using WordleBackend
 @using WordleBackend.Classes
 @using WordleBackend.Enums
 @inject Services.SpinnerService SpinnerService
 @inject Login UserLogin
 @inject DataBase db
+@inject ValidWords ValidWords
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @* @inject HttpClient Http *@
@@ -84,11 +86,8 @@ else
 			}
 			else
 			{
-				var availableWords = Utilitys.GetEmbeddedTextResource("WordleWords.txt")
-					.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(w => w.Trim().ToLowerInvariant())
-					.Where(w => w.Length == 5)
-					.ToList();
+                await ValidWords.LoadValidWords(Http);
+				var availableWords = ValidWords.AllWords.Where(w => w.CanUse).Select(w => w.Word).ToList();
 				Random rand = new Random();
 
 				dailyWord = new WordResponse() { Solution = availableWords[rand.Next(availableWords.Count())] };

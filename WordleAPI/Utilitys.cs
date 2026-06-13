@@ -48,30 +48,4 @@ public static class Utilitys
             }
         }
     }
-
-    /*
-        Function Name: IsWordInText
-        Input: word and resourceName
-        Output: true if searched word is exists in the file, false otherwise
-        Brief description:
-            Reads word list from resourceName and checks if word input exists
-    */    
-
-    public static bool IsWordInText(string word, string resourceName)
-    {
-        // Read full file text
-        var wordList = GetEmbeddedTextResource(resourceName);
-
-        // Normalize all lines
-        var validWords = wordList
-            .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(w => w.Trim().ToLowerInvariant())
-            .ToHashSet(); // faster lookups
-
-        // Normalize input 
-        string normalizedWord = word.Trim().ToLowerInvariant();
-
-        return validWords.Contains(normalizedWord);
-    }
-
 }

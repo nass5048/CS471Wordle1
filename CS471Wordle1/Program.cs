@@ -20,6 +20,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 // Shared services and app data
 builder.Services.AddSingleton<Services.SpinnerService>();
 builder.Services.AddSingleton<DataBase>();
+builder.Services.AddSingleton<ValidWords>();
 builder.Services.AddSingleton<Login>();
 
 // Browser local storage helper service

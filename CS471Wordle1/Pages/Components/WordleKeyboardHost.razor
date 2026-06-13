@@ -3,9 +3,11 @@
 @using WordleAPI
 @using CS471Wordle1.Pages.Components
 @using Microsoft.AspNetCore.Components.Web
+@using WordleBackend
 @using WordleBackend.Enums
 @inject Login UserLogin
 @inject DataBase db
+@inject ValidWords ValidWords
 @inject HttpClient Http
 
 
@@ -102,6 +104,7 @@
     {
         //TODO await stats.LoadAsync();
         await db.LoadData(Http);
+        await ValidWords.LoadValidWords(Http);
         StartNewGame();
 
         // Restore previous game safely (stats.Guesses may be null)
@@ -121,7 +124,7 @@
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
 
-        if(Guesses[CurrentRow - 1].Word.Contains("Solution"))
+        if (CurrentRow != 0 && Guesses[CurrentRow - 1].Word.Contains("Solution"))
         {
             StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
             CurrentRow = 7;
@@ -172,7 +175,7 @@
                 break;
 
             case "enter":
-                if (CurrentGuess.Length == 5)
+                if (CurrentGuess.Length == 5 && CurrentRow <= 6)
                     await SubmitGuess();
                 break;
 
@@ -230,7 +233,7 @@
         }
 
         //Checks to see if the guess is valid: 5 letters, not past the last row, and is a real word
-        if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !Utilitys.IsWordInText(CurrentGuess, "WordleWords.txt"))
+        if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !IsWordValid(CurrentGuess))
         {
             StatusMessage = "Not Valid Word";
             return;
@@ -252,6 +255,7 @@
             CurrentRow = 6;
             CurrentGuess = "";
             await UserLogin.UserStats.FinishGame(true, Guesses, gameMode);
+            Console.WriteLine($"Updating user data for {UserLogin.UserStats.GamesPlayed} after win");
 			db.UpdateUserData(UserLogin);
             await db.SaveData(Http);
             await OnGameCompleted.InvokeAsync(null);
@@ -269,6 +273,11 @@
             await db.SaveData(Http);
             await OnGameCompleted.InvokeAsync(null);
         }
+    }
+
+    private bool IsWordValid(string word)
+    {
+        return ValidWords.AllWords.Select(w => w.Word).Any(x => x == word);
     }
 
     private void UpdateKeyboardState(WordGuessResponse response)

@@ -14,6 +14,8 @@ public class Stats
 
     public decimal AverageGuesses { get; set; }
 
+    public int TotalGuesses { get; set; }
+
     public DateTime? LastPlayed { get; set; }
     public TimeSpan? DailyWordTime { get; set; }
 
@@ -21,7 +23,7 @@ public class Stats
     public List<WordGuessResponse?>? DailyGuesses { get; set; }
 
     public int robotCount { get; set; } // Num of AI guesses
-    
+
     /*
         Function Name: FinishGame
         Input: true/false win, list of guesses during gameplay, and GameMode
@@ -32,48 +34,62 @@ public class Stats
     */
     public async Task FinishGame(bool win, List<WordGuessResponse?> guesses, GameMode mode)
     {
-        // Tracks time it takes for user to complete daily Wordle
-        if(mode == GameMode.Daily)
-        {
-            DailyWordTime = DateTime.Now - LastPlayed;
+        if (mode != GameMode.Daily)
+            return;
 
-        }
-        // Prevents multiple games in one day from counting
-        if (!LastPlayed.HasValue || !(LastPlayed.Value.Date == DateTime.Today))
+        // Only count one Daily game per day
+        //if (LastPlayed.HasValue && LastPlayed.Value.Date == DateTime.Today)
+        //    return;
+
+        GamesPlayed++;
+
+        int guessCount = guesses.Count(g => g != null);
+
+        TotalGuesses += guessCount;
+
+        AverageGuesses = Math.Round(
+            (decimal)TotalGuesses / GamesPlayed,
+            2
+        );
+
+        if (win)
         {
-            GamesPlayed++;
-            // Updates user's streak
-            if (LastPlayed.HasValue && LastPlayed.Value.Date.AddDays(1) == DateTime.Today)
+            GamesWon++;
+
+            if (LastPlayed.HasValue &&
+                LastPlayed.Value.Date.AddDays(1) == DateTime.Today)
             {
                 CurrentStreak++;
-                if (CurrentStreak > MaxStreak)
-                {
-                    MaxStreak = CurrentStreak;
-                }
             }
             else
             {
                 CurrentStreak = 1;
             }
 
-            LastPlayed = DateTime.Today;
-            // Adds value of 1 to total GamesWon of the user for stats purposes
-            if (win)
+            if (CurrentStreak > MaxStreak)
             {
-                GamesWon++;
-            }
-
-            DailyGuesses = guesses;
-            // Compares user and AI gameplay
-            if (robotCount <= DailyGuesses.Count(p => p != null))
-            {
-                RobotWins++;
-            }
-            else
-            {
-                RobotLosses++;
+                MaxStreak = CurrentStreak;
             }
         }
+        else
+        {
+            CurrentStreak = 0;
+        }
+
+        DailyGuesses = guesses;
+
+        int userGuesses = guesses.Count(g => g != null);
+
+        if (robotCount <= userGuesses)
+        {
+            RobotWins++;
+        }
+        else
+        {
+            RobotLosses++;
+        }
+
+        LastPlayed = DateTime.Today;
     }
 
 }
