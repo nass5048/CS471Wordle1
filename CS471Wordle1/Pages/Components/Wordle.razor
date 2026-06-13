@@ -16,7 +16,7 @@
 @if (correctWord != null)
 {
 	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/>
-	if(challenge == Challenge.None || challenge == Challenge.HardMode)
+	if((challenge == Challenge.None || challenge == Challenge.HardMode) && UseAI)
 	{
 		<div class="top-right">
 			<RobotWordle Solution=@correctWord Hide=@HideRobot />
@@ -51,6 +51,8 @@ else
 	public GameMode gameMode { get; set; }
 	[Parameter]
 	public Challenge challenge { get; set; }
+	[Parameter]
+	public bool UseAI { get; set; }
 
 	public string Error { get; set; } = "";
 

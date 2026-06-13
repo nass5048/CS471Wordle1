@@ -47,6 +47,10 @@
     {
       "date": "2026-05-10",
       "word": "water"
+    },
+    {
+      "date": "2026-06-13",
+      "word": "pains"
     }
   ],
   "login": [
@@ -142,69 +146,42 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-06-04T17:31:30.711-04:00",
-        "dailyWordTime": "00:02:58.2300000",
+        "lastPlayed": "2026-06-13T15:10:38.714-04:00",
+        "dailyWordTime": "00:00:22.0940000",
         "dailyGuesses": [
           {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "clown",
+            "word": "tests",
             "colors": [
               0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
               0,
               0,
               0,
               0
             ]
-          }
+          },
+          {
+            "word": "pains",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null,
+          null
         ],
         "robotCount": 0
       },
@@ -222,9 +199,43 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": null,
-        "dailyWordTime": null,
-        "dailyGuesses": null,
+        "lastPlayed": "2026-06-13T15:13:53.055-04:00",
+        "dailyWordTime": "00:00:11.0320000",
+        "dailyGuesses": [
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "pains",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null,
+          null
+        ],
         "robotCount": 0
       },
       "userPermission": 1
@@ -233,9 +244,6 @@
       "userID": 5,
       "username": "mymom",
       "password": "abc123",
-      "userSettings": {
-        "volume": 100
-      },
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,
@@ -267,18 +275,8 @@
   "bugReports": [
     {
       "userID": 2,
-      "type": 1,
-      "bugDescription": "test"
-    },
-    {
-      "userID": 2,
       "type": 2,
       "bugDescription": "test"
-    },
-    {
-      "userID": 0,
-      "type": 0,
-      "bugDescription": "teast"
     },
     {
       "userID": 0,

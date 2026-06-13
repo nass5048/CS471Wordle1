@@ -113,13 +113,19 @@
                 .Concat(Enumerable.Repeat<WordGuessResponse?>(null, 6)) // pad to 6
                 .Take(6) // final length 6
                 .ToList();
-            OnGameCompleted.InvokeAsync(null); 
+            await OnGameCompleted.InvokeAsync(null); 
         }
         if ((!UserLogin.UserStats.LastPlayed.HasValue || UserLogin.UserStats.LastPlayed.Value.Date != DateTime.Today) && gameMode == GameMode.Daily)
         {
             UserLogin.UserStats.LastPlayed = DateTime.Now;
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
+
+        if(Guesses[CurrentRow - 1].Word.Contains("Solution"))
+        {
+            StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
+            CurrentRow = 7;
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -167,7 +173,7 @@
 
             case "enter":
                 if (CurrentGuess.Length == 5)
-                    SubmitGuess();
+                    await SubmitGuess();
                 break;
 
             default:
