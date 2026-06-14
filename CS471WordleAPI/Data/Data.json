@@ -47,6 +47,10 @@
     {
       "date": "2026-05-10",
       "word": "water"
+    },
+    {
+      "date": "2026-06-11",
+      "word": "faced"
     }
   ],
   "login": [
@@ -240,8 +244,8 @@
     },
     {
       "userID": 5,
-      "username": "mymom",
-      "password": "abc123",
+      "username": "jeanna359",
+      "password": "cat123",
       "userSettings": {
         "volume": 100
       },
@@ -253,9 +257,25 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": null,
+        "lastPlayed": "2026-06-11T20:09:54.147-04:00",
         "dailyWordTime": null,
-        "dailyGuesses": null,
+        "dailyGuesses": [
+          {
+            "word": "adieu",
+            "colors": [
+              1,
+              1,
+              0,
+              2,
+              0
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
         "robotCount": 0
       },
       "userPermission": 1
