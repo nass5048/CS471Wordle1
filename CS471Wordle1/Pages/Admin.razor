@@ -1,11 +1,13 @@
 ﻿@page "/admin"
 @using WordleAPI.Classes
+@using WordleBackend
 @using WordleBackend.Classes
 @using WordleBackend.Enums
 @using WordleAPI
 @inject Login UserLogin
 @inject HttpClient Http
 @inject DataBase db
+@inject ValidWords ValidWords
 
 @if(UserLogin.UserPermission == Permission.Admin)
 {
@@ -131,11 +133,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
-        AvailableWords = Utilitys.GetEmbeddedTextResource("WordleWords.txt")
-        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-        .Select(w => w.Trim().ToLowerInvariant())
-        .Where(w => w.Length == 5)
-        .ToList();
+        await ValidWords.LoadValidWords(Http);
+        AvailableWords = ValidWords.AllWords.Where(w => w.CanUse).Select(w => w.Word).ToList();
     }
 
     private async Task LoadData()

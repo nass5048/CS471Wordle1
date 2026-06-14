@@ -18,6 +18,9 @@
             <b>Reported By:</b> @GetUsername(bug.UserID) <br />
             <b>Description:</b>
             <div>@bug.BugDescription</div>
+            <button class="btn btn-danger mb-3" @onclick="() => DeleteBug(bug)">
+                Resolve
+            </button>
         </div>
     }
 }
@@ -45,5 +48,18 @@ else
     {
         var user = db.Login.FirstOrDefault(x => x.UserID == id);
         return user?.Username ?? "Unknown";
+    }
+
+    private async Task DeleteBug(BugReport bug)
+    {
+        await db.LoadData(Http);
+
+        db.BugReports.RemoveAll(x => x.UserID == bug.UserID 
+                                && x.Type == bug.Type 
+                                && x.BugDescription == bug.BugDescription);
+
+        await db.SaveData(Http);
+
+        await LoadBugs();
     }
 }

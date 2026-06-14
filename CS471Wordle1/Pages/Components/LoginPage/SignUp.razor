@@ -69,7 +69,7 @@
                 return;
             }
         }
-        var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Count()+1, UserPermission = Permission.User };
+        var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Max(x => x.UserID) + 1, UserPermission = Permission.User };
         db.Login.Add(login);
         await db.SaveData(Http);
         message = $"Account created for {model.Username}";

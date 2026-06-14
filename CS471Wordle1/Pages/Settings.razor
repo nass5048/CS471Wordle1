@@ -1,4 +1,5 @@
 ﻿@page "/settings"
+@using System.ComponentModel.DataAnnotations
 @using WordleAPI
 @using WordleAPI.Classes
 @using WordleBackend.Enums
@@ -9,17 +10,6 @@
     <div class="d-flex justify-content-center mt-5">
         <div class="card p-4 shadow" style="width: 420px;">
             <h3 class="text-center mb-4">Settings</h3>
-
-            <!-- Volume Section -->
-            <div class="mb-4">
-                <label class="form-label fw-bold">Volume: @UserLogin.UserSettings.Volume%</label>
-                <input type="range"
-                       class="form-range"
-                       min="0" max="100"
-                       @bind="UserLogin.UserSettings.Volume" @bind:after="UpdateVolume" />
-            </div>
-
-            <hr />
 
             <!-- Reset Username Section -->
             <h5 class="fw-bold mb-3">Reset Username</h5>
@@ -32,6 +22,8 @@
             <button class="btn btn-danger w-100" @onclick="ResetUsername">
                 Reset Username
             </button>
+
+            <div class="text-center mt-3 text-danger">@UserNameMessage</div>
 
             <hr />
 
@@ -52,7 +44,7 @@
                 Reset Password
             </button>
 
-            <div class="text-center mt-3 text-info">@Message</div>
+            <div class="text-center mt-3 text-danger">@PasswordMessage</div>
         </div>
     </div>
 } else
@@ -61,10 +53,13 @@
 }
 
 @code {
+    [MinLength(3)]
     string NewPassword = "";
     string ConfirmPassword = "";
+    [MinLength(3)]
 	string NewUsername = "";
-    string Message = "";
+    string UserNameMessage = "";
+    string PasswordMessage = "";
     protected override async Task OnInitializedAsync()
     {
         await db.LoadData(Http);
@@ -74,13 +69,18 @@
     {
         if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))
         {
-            Message = "Please fill out both fields.";
+            PasswordMessage = "Please fill out both fields.";
             return;
         }
 
         if (NewPassword != ConfirmPassword)
         {
-            Message = "Passwords do not match.";
+            PasswordMessage = "Passwords do not match.";
+            return;
+        }
+        if(NewPassword.Length < 6)
+        {
+            PasswordMessage = "Password must be at least 6 characters long.";
             return;
         }
         await db.LoadData(Http);
@@ -88,21 +88,26 @@
         db.UpdateUserData(UserLogin);
         await db.SaveData(Http);
         // TODO: Call your API to update the password
-        Message = "Password successfully reset.";
+        PasswordMessage = "Password successfully reset.";
     }
 
     async Task ResetUsername()
     {
         if (string.IsNullOrWhiteSpace(NewUsername))
         {
-            Message = "Please enter a new username.";
+            UserNameMessage = "Please enter a new username.";
+            return;
+        }
+        if (NewUsername.Length < 3)
+        {
+            UserNameMessage = "Username must be at least 3 characters long.";
             return;
         }
         foreach (var logins in db.Login)
         {
             if (logins.Username == NewUsername)
             {
-                Message = "Username already exists.";
+                UserNameMessage = "Username already exists.";
                 return;
             }
         }
@@ -110,14 +115,7 @@
         UserLogin.Username = NewUsername;
         db.UpdateUserData(UserLogin);
         await db.SaveData(Http);
-        Message = "Username successfully reset.";
+        UserNameMessage = "Username successfully reset.";
 		StateHasChanged();
-    }
-
-    async Task UpdateVolume()
-    {
-        await db.LoadData(Http);
-        db.UpdateUserData(UserLogin);
-        await db.SaveData(Http);
     }
 }

@@ -2,11 +2,13 @@
 @using WordleAPI
 @using WordleAPI.Classes;
 @using CS471Wordle1.Pages.Components
+@using WordleBackend
 @using WordleBackend.Classes
 @using WordleBackend.Enums
 @inject Services.SpinnerService SpinnerService
 @inject Login UserLogin
 @inject DataBase db
+@inject ValidWords ValidWords
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @* @inject HttpClient Http *@
@@ -16,7 +18,7 @@
 @if (correctWord != null)
 {
 	<WordleKeyboardHost Solution=@correctWord OnGameCompleted="completeDaily" challenge="challenge" gameMode="gameMode"/>
-	if(challenge == Challenge.None || challenge == Challenge.HardMode)
+	if((challenge == Challenge.None || challenge == Challenge.HardMode) && UseAI)
 	{
 		<div class="top-right">
 			<RobotWordle Solution=@correctWord Hide=@HideRobot />
@@ -51,6 +53,8 @@ else
 	public GameMode gameMode { get; set; }
 	[Parameter]
 	public Challenge challenge { get; set; }
+	[Parameter]
+	public bool UseAI { get; set; }
 
 	public string Error { get; set; } = "";
 
@@ -77,16 +81,13 @@ else
 				}
 				else
 				{
-					Error = "Today's word has not been set yet. Please check back later.";
+					Error = "Sorry, not Daily Word has been set. Come again later.";
 				}
 			}
 			else
 			{
-				var availableWords = Utilitys.GetEmbeddedTextResource("WordleWords.txt")
-					.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-					.Select(w => w.Trim().ToLowerInvariant())
-					.Where(w => w.Length == 5)
-					.ToList();
+                await ValidWords.LoadValidWords(Http);
+				var availableWords = ValidWords.AllWords.Where(w => w.CanUse).Select(w => w.Word).ToList();
 				Random rand = new Random();
 
 				dailyWord = new WordResponse() { Solution = availableWords[rand.Next(availableWords.Count())] };

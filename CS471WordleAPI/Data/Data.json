@@ -49,18 +49,19 @@
       "word": "water"
     },
     {
-      "date": "2026-06-11",
-      "word": "faced"
+      "date": "2026-06-13",
+      "word": "pains"
+    },
+    {
+      "date": "2026-06-14",
+      "word": "fused"
     }
   ],
   "login": [
     {
       "userID": 1,
-      "username": "urmom",
+      "username": "admin",
       "password": "admins",
-      "userSettings": {
-        "volume": 100
-      },
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,
@@ -69,69 +70,16 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
+        "totalGuesses": 0,
         "lastPlayed": "2026-06-04T17:21:19.036-04:00",
         "dailyWordTime": "00:08:39.4260000",
         "dailyGuesses": [
-          {
-            "word": "ocean",
-            "colors": [
-              0,
-              0,
-              1,
-              2,
-              0
-            ]
-          },
-          {
-            "word": "renal",
-            "colors": [
-              0,
-              2,
-              0,
-              2,
-              0
-            ]
-          },
-          {
-            "word": "desks",
-            "colors": [
-              0,
-              2,
-              0,
-              1,
-              0
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "clown",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "heads",
-            "colors": [
-              0,
-              2,
-              0,
-              0,
-              0
-            ]
-          }
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
         ],
         "robotCount": 0
       },
@@ -141,9 +89,42 @@
       "userID": 2,
       "username": "mike",
       "password": "123456",
-      "userSettings": {
-        "volume": 100
+      "userStats": {
+        "gamesPlayed": 1,
+        "gamesWon": 1,
+        "robotWins": 1,
+        "robotLosses": 0,
+        "currentStreak": 1,
+        "maxStreak": 1,
+        "averageGuesses": 1,
+        "totalGuesses": 1,
+        "lastPlayed": "2026-06-13T00:00:00-04:00",
+        "dailyWordTime": null,
+        "dailyGuesses": [
+          {
+            "word": "pains",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "robotCount": 0
       },
+      "userPermission": 1
+    },
+    {
+      "userID": 4,
+      "username": "abc",
+      "password": "123456",
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,
@@ -152,63 +133,118 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": "2026-06-04T17:31:30.711-04:00",
-        "dailyWordTime": "00:02:58.2300000",
+        "totalGuesses": 0,
+        "lastPlayed": "2026-06-13T15:13:53.055-04:00",
+        "dailyWordTime": "00:00:11.0320000",
         "dailyGuesses": [
           {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "kebab",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "clown",
+            "word": "tests",
             "colors": [
               0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "pains",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null,
+          null
+        ],
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 5,
+      "username": "asd",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 1,
+        "gamesWon": 0,
+        "robotWins": 1,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 6,
+        "totalGuesses": 6,
+        "lastPlayed": "2026-06-13T00:00:00-04:00",
+        "dailyWordTime": null,
+        "dailyGuesses": [
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
               0,
               0,
               0,
@@ -221,12 +257,9 @@
       "userPermission": 1
     },
     {
-      "userID": 4,
-      "username": "abc",
+      "userID": 6,
+      "username": "qwe",
       "password": "123456",
-      "userSettings": {
-        "volume": 100
-      },
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,
@@ -235,38 +268,17 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
-        "lastPlayed": null,
-        "dailyWordTime": null,
-        "dailyGuesses": null,
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 5,
-      "username": "jeanna359",
-      "password": "cat123",
-      "userSettings": {
-        "volume": 100
-      },
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "lastPlayed": "2026-06-11T20:09:54.147-04:00",
+        "totalGuesses": 0,
+        "lastPlayed": "2026-06-13T22:31:52.771-04:00",
         "dailyWordTime": null,
         "dailyGuesses": [
           {
-            "word": "adieu",
+            "word": "allow",
             "colors": [
               1,
-              1,
               0,
-              2,
+              0,
+              0,
               0
             ]
           },
@@ -281,12 +293,9 @@
       "userPermission": 1
     },
     {
-      "userID": 5,
-      "username": "jeanna359",
-      "password": "cat123",
-      "userSettings": {
-        "volume": 100
-      },
+      "userID": 7,
+      "username": "qwel",
+      "password": "123456",
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,
@@ -295,6 +304,7 @@
         "currentStreak": 0,
         "maxStreak": 0,
         "averageGuesses": 0,
+        "totalGuesses": 0,
         "lastPlayed": null,
         "dailyWordTime": null,
         "dailyGuesses": null,
@@ -318,18 +328,8 @@
   "bugReports": [
     {
       "userID": 2,
-      "type": 1,
-      "bugDescription": "test"
-    },
-    {
-      "userID": 2,
       "type": 2,
       "bugDescription": "test"
-    },
-    {
-      "userID": 0,
-      "type": 0,
-      "bugDescription": "teast"
     },
     {
       "userID": 0,

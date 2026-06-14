@@ -3,15 +3,17 @@
 @using WordleAPI
 @using CS471Wordle1.Pages.Components
 @using Microsoft.AspNetCore.Components.Web
+@using WordleBackend
 @using WordleBackend.Enums
 @inject Login UserLogin
 @inject DataBase db
+@inject ValidWords ValidWords
 @inject HttpClient Http
 
 
-<div>@StatusMessage</div>
-<div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
 
+<div @ref="ContainerRef" tabindex="0" @onkeydown="HandleKeyboardEvent" style="outline:none">
+    <div>@StatusMessage</div>
 
     <div style="display:contents; padding:8px; background:#f3f3f3; border-radius:6px;">
         @for (int r = 0; r < 6; r++)
@@ -102,6 +104,7 @@
     {
         //TODO await stats.LoadAsync();
         await db.LoadData(Http);
+        await ValidWords.LoadValidWords(Http);
         StartNewGame();
 
         // Restore previous game safely (stats.Guesses may be null)
@@ -113,13 +116,24 @@
                 .Concat(Enumerable.Repeat<WordGuessResponse?>(null, 6)) // pad to 6
                 .Take(6) // final length 6
                 .ToList();
-            OnGameCompleted.InvokeAsync(null); 
+            
         }
         if ((!UserLogin.UserStats.LastPlayed.HasValue || UserLogin.UserStats.LastPlayed.Value.Date != DateTime.Today) && gameMode == GameMode.Daily)
         {
+            UserLogin.UserStats.DailyGuesses = new List<WordGuessResponse?>();
             UserLogin.UserStats.LastPlayed = DateTime.Now;
+            UserLogin.UserStats.DailyWordTime = null;
+            db.UpdateUserData(UserLogin);
+            await db.SaveData(Http);
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
+
+        if (CurrentRow != 0 && Guesses[CurrentRow - 1].Word.Contains("Solution"))
+        {
+            StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
+            CurrentRow = 7;
+            await OnGameCompleted.InvokeAsync(null);
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -166,8 +180,8 @@
                 break;
 
             case "enter":
-                if (CurrentGuess.Length == 5)
-                    SubmitGuess();
+                if (CurrentGuess.Length == 5 && CurrentRow <= 6)
+                    await SubmitGuess();
                 break;
 
             default:
@@ -202,6 +216,7 @@
         Console.WriteLine($"Submitting guess: {CurrentGuess}");
         var response = new WordGuessResponse(Solution, CurrentGuess, challenge, false);
 
+        // For hard mode, enforce that all previously revealed hints are used in subsequent guesses
         if(challenge == Challenge.HardMode && CurrentRow != 0)
         {
             var index = 0;
@@ -210,20 +225,22 @@
 
                 if (color == ResponseColor.green && response.Colors[index] != ResponseColor.green)
                 {
-                    StatusMessage = "NotValidWord";
+                    StatusMessage = "Your not using your green letters in the correct places";
                     return;
                 }
                 if (color == ResponseColor.yellow && !response.Word.Contains(Guesses[CurrentRow - 1].Word[index]))
                 {
-                    StatusMessage = "NotValidWord";
+                    StatusMessage = "Your not Using 1 of your yellow letters";
                     return;
                 }
                 index++;
             }
         }
 
-        if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !Utilitys.IsWordInText(CurrentGuess, "WordleWords.txt"))
+        //Checks to see if the guess is valid: 5 letters, not past the last row, and is a real word
+        if (CurrentGuess.Length != 5 || CurrentRow >= 6 || !IsWordValid(CurrentGuess))
         {
+            StatusMessage = "Not Valid Word";
             return;
         }
 
@@ -243,6 +260,7 @@
             CurrentRow = 6;
             CurrentGuess = "";
             await UserLogin.UserStats.FinishGame(true, Guesses, gameMode);
+            Console.WriteLine($"Updating user data for {UserLogin.UserStats.GamesPlayed} after win");
 			db.UpdateUserData(UserLogin);
             await db.SaveData(Http);
             await OnGameCompleted.InvokeAsync(null);
@@ -260,6 +278,11 @@
             await db.SaveData(Http);
             await OnGameCompleted.InvokeAsync(null);
         }
+    }
+
+    private bool IsWordValid(string word)
+    {
+        return ValidWords.AllWords.Select(w => w.Word).Any(x => x == word);
     }
 
     private void UpdateKeyboardState(WordGuessResponse response)
