@@ -1,0 +1,93 @@
+@page "/how-to-play"
+@inject NavigationManager Navigation
+
+<div class="container mt-5">
+    <div class="card shadow p-4 mx-auto" style="max-width: 900px;">
+        <h1 class="text-center mb-4">How to Play</h1>
+
+        <h3>Normal Mode</h3>
+        <p>
+            Guess the word in six tries or less. Each guess must be a valid
+            5-letter word. Hit <strong>Enter</strong> to submit your guess!
+        </p>
+
+        <p>
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the actual word.
+        </p>
+
+        <ul>
+            <li>
+                <strong>Yellow</strong> means that the letter is in the word,
+                but in the wrong spot.
+            </li>
+            <li>
+                <strong>Green</strong> means that the letter is in the right
+                spot and in the word.
+            </li>
+            <li>
+                <strong>Gray</strong> means the letter is not in the word at all.
+            </li>
+        </ul>
+
+        <hr />
+
+        <h3>All Yellows</h3>
+        <p>
+            Similar to Normal Mode, except every
+            letter you guess that is in the word will appear yellow, even if it
+            is already in the correct spot.
+        </p>
+
+        <hr />
+
+        <h3>Only Greens</h3>
+        <p>
+            Similar to Normal Mode, except only letters that are in the word
+            <em>and</em> in the correct spot are revealed.
+        </p>
+
+        <p>
+            Any other letter (including letters that are in the word but in the
+            wrong spot—letters that would normally be yellow) will appear gray.
+        </p>
+
+        <hr />
+
+        <h3>Hard Mode</h3>
+        <p>
+            Once a letter has been colored yellow, it must appear in all
+            subsequent guesses.
+        </p>
+
+        <p>
+            Once a letter has been colored green, it must remain in that exact
+            position in all subsequent guesses.
+        </p>
+
+        <hr />
+
+        <h3>Vs. AI</h3>
+        <p>
+            Normal Mode, except once you've run out of guesses or correctly
+            guessed the word, the AI's guesses will appear next to yours.
+        </p>
+
+        <p>
+            The AI cannot see your guesses. Are you able to beat the AI?
+        </p>
+
+        <div class="text-center mt-4">
+        <button class="btn btn-secondary" @onclick="GoHome">
+            Back to Home
+        </button>
+        </div>
+
+        @code {
+            private void GoHome()
+            {
+                Navigation.NavigateTo("/");
+            }
+        }
+    </div>
+</div>

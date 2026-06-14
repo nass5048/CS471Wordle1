@@ -7,55 +7,60 @@
 @page "/"
 
 <EditForm Model="@model">
+<div class="container mt-5">
 
-    <div class="container mt-5">
+    <h1 class="fw-bold text-center mb-4">Wordle+</h1>
+    <p class="text-center text-muted mb-5">
+        Customize your game and start playing instantly.
+    </p>
 
-        <h1 class="fw-bold text-center mb-4">Wordle+</h1>
-        <p class="text-center text-muted mb-5">
-            Customize your game and start playing instantly.
-        </p>
+    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <h4 class="fw-bold mb-3">Game Settings</h4>
 
-        <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
-
-            <h4 class="fw-bold mb-3">Game Settings</h4>
-
-            <!-- Game Mode -->
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Game Mode</label>
-                <select @bind="model.gameMode" class="form-select">
-                    @foreach (var mode in Enum.GetValues(typeof(GameMode)))
-                    {
-                        <option value="@mode">@mode</option>
-                    }
-                </select>
-            </div>
-
-            <!-- Difficulty -->
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Difficulty</label>
-                <select @bind="model.challenge" class="form-select">
-                    @foreach (var diff in Enum.GetValues(typeof(Challenge)))
-                    {
-                        <option value="@diff">@diff</option>
-                    }
-                </select>
-            </div>
-            @if (model.challenge == Challenge.None || model.challenge == Challenge.HardMode)
-            {
-                <div class="mb-3">
-                    <InputCheckbox @bind-Value="model.UseAI" class="form-check-input" id="useAI" />
-                    <label class="form-check-label ms-2" for="useAI">
-                        VS AI
-                    </label>
-                </div>
-            }
-
-            <button class="btn btn-success w-100 mt-3" @onclick="StartGame">
-                Start Game
-            </button>
-
+        <!-- Game Mode -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Game Mode</label>
+            <select @bind="model.gameMode" class="form-select">
+                @foreach (var mode in Enum.GetValues(typeof(GameMode)))
+                {
+                    <option value="@mode">@mode</option>
+                }
+            </select>
         </div>
+
+        <!-- Difficulty -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Difficulty</label>
+            <select @bind="model.challenge" class="form-select">
+                @foreach (var diff in Enum.GetValues(typeof(Challenge)))
+                {
+                    <option value="@diff">@diff</option>
+                }
+            </select>
+        </div>
+
+        @if (model.challenge == Challenge.None || model.challenge == Challenge.HardMode)
+        {
+            <div class="mb-3">
+                <InputCheckbox @bind-Value="model.UseAI" class="form-check-input" id="useAI" />
+                <label class="form-check-label ms-2" for="useAI">
+                    Use AI
+                </label>
+            </div>
+        }
+
+        <button class="btn btn-success w-100 mt-3" @onclick="StartGame">
+            Start Game
+        </button>
     </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-primary btn-lg" @onclick="GoToHowToPlay">
+            How to Play
+        </button>
+    </div>
+
+</div>
 </EditForm>
 
 
@@ -79,5 +84,10 @@
         public Challenge challenge { get; set; }
         public GameMode gameMode { get; set; }
         public bool UseAI { get; set; } = true;
+    }
+
+    private void GoToHowToPlay()
+    {
+        Navigation.NavigateTo("/how-to-play");
     }
 }
