@@ -10,40 +10,52 @@
 
 <EditForm Model="model" OnValidSubmit="Register">
     <DataAnnotationsValidator />
+    @if(!signedUp)
+    {
+        <div class="d-flex justify-content-center mt-5">
+            <div class="card p-4 shadow" style="width: 350px;">
+                <h4 class="text-center mb-3">Create Account</h4>
 
-    <div class="d-flex justify-content-center mt-5">
-        <div class="card p-4 shadow" style="width: 350px;">
-            <h4 class="text-center mb-3">Create Account</h4>
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <InputText class="form-control" @bind-Value="model.Username" />
+                    <ValidationMessage For="@(() => model.Username)" />
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <InputText class="form-control" @bind-Value="model.Username" />
-                <ValidationMessage For="@(() => model.Username)" />
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <InputText type="password" class="form-control" @bind-Value="model.Password" />
+                    <ValidationMessage For="@(() => model.Password)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <InputText type="password" class="form-control" @bind-Value="model.ConfirmPassword" />
+                    <ValidationMessage For="@(() => model.ConfirmPassword)" />
+                </div>
+
+                <button class="btn btn-success w-100" type="submit">Sign Up</button>
+
+                <div class="text-center mt-3 text-danger">@message</div>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <InputText type="password" class="form-control" @bind-Value="model.Password" />
-                <ValidationMessage For="@(() => model.Password)" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Confirm Password</label>
-                <InputText type="password" class="form-control" @bind-Value="model.ConfirmPassword" />
-                <ValidationMessage For="@(() => model.ConfirmPassword)" />
-            </div>
-
-            <button class="btn btn-success w-100" type="submit">Sign Up</button>
-
-            <div class="text-center mt-3 text-danger">@message</div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center mt-5">
+            <div class="card p-4 shadow" style="width: 350px;">
+                <h4 class="text-center mb-3">Account Created</h4>
+                Returning to Login page
+                
+            </div>
+        </div>
+    }
 </EditForm>
 
 @code {
     SignupModel model = new();
     string message = "";
-
+    bool signedUp = false;
     async Task Register()
     {
         if (model.Password != model.ConfirmPassword)
@@ -72,7 +84,9 @@
         var login = new Login() { Username = model.Username, Password = model.Password, UserID = db.Login.Max(x => x.UserID) + 1, UserPermission = Permission.User };
         db.Login.Add(login);
         await db.SaveData(Http);
+        signedUp = true;
         message = $"Account created for {model.Username}";
+        StateHasChanged();
         await Task.Delay(5000);
         NavigationManager.NavigateTo("/login");
     }

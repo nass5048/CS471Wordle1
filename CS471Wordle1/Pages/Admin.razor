@@ -8,117 +8,226 @@
 @inject HttpClient Http
 @inject DataBase db
 @inject ValidWords ValidWords
-
-@if(UserLogin.UserPermission == Permission.Admin)
+@if (UserLogin.UserPermission == Permission.Admin)
 {
-    <h3 class="mt-4">Admin Panel</h3>
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card shadow-lg border-0 p-4" style="width: 1000px; border-radius: 15px;">
 
-    @if (isLoading)
-    {
-        <p>Loading...</p>
-    }
-    else
-    {
-        <div class="text-center mt-3 text-danger">@DailyWordMessage</div>
-        <div class="card p-3 mt-3">
-            <div class="row g-2 mb-3">
-                <div class="col-4">
-                    <input type="date" class="form-control" @bind="newDate" />
+            <h2 class="text-center fw-bold mb-4">
+                Admin Panel
+            </h2>
+
+            @if (isLoading)
+            {
+                <div class="text-center">
+                    <div class="spinner-border text-primary"></div>
+                    <p class="mt-2">Loading...</p>
+                </div>
+            }
+            else
+            {
+                <div class="text-center text-danger mb-3">
+                    @DailyWordMessage
                 </div>
 
-                <div class="col-4 position-relative">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Search word..."
-                           @bind="wordSearch"
-                           @oninput="FilterWords" />
+                <!-- Daily Word Management -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
 
-                    @if (filteredWords.Any())
-                    {
-                        <div class="list-group position-absolute w-100" style="z-index: 1000; max-height: 200px; overflow-y: auto;">
-                            @foreach (var w in filteredWords)
-                            {
-                                <button type="button"
-                                        class="list-group-item list-group-item-action"
-                                        @onclick="() => SelectWord(w)">
-                                    @w
+                        <h4 class="fw-bold mb-3">
+                            Daily Word Management
+                        </h4>
+
+                        <div class="row g-3 align-items-start">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Date</label>
+                                <input type="date"
+                                       class="form-control"
+                                       @bind="newDate" />
+                            </div>
+
+                            <div class="col-md-6 position-relative">
+                                <label class="form-label">Word</label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Search word..."
+                                       @bind="wordSearch"
+                                       @oninput="FilterWords" />
+
+                                @if (filteredWords.Any())
+                                {
+                                    <div class="list-group position-absolute w-100 shadow"
+                                         style="z-index:1000; max-height:200px; overflow-y:auto;">
+
+                                        @foreach (var w in filteredWords)
+                                        {
+                                            <button type="button"
+                                                    class="list-group-item list-group-item-action"
+                                                    @onclick="() => SelectWord(w)">
+                                                @w
+                                            </button>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button class="btn btn-success w-100"
+                                        @onclick="AddRecord">
+                                    Add Daily Word
                                 </button>
-                            }
+                            </div>
+
                         </div>
-                    }
-                </div>
 
-                <div class="col-4">
-                    <button class="btn btn-success w-100" @onclick="AddRecord">Add</button>
-                </div>
-            </div>
+                        <div class="table-responsive mt-4">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Word</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
 
-            <table class="table table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Word</th>
-                        <th style="width: 120px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var entry in db.DailyWords.OrderBy(r => r.Date))
-                    {
-                        <tr>
-                            <td>@entry.Date.ToString("yyyy-MM-dd")</td>
-                            <td>@entry.Word</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecord(entry)">Delete</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <div class="card p-3 mt-4">
-            <h5>User Management</h5>
-
-            <table class="table table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Permissions</th>
-                        <th style="width: 200px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var user in db.Login)
-                    {
-                        <tr>
-                            <td>
-                                <input class="form-control" @bind="user.Username" />
-                            </td>
-
-                            <td>
-                                <select @bind="user.UserPermission" class="form-select">
-                                    @foreach (var mode in Enum.GetValues(typeof(Permission)))
+                                <tbody>
+                                    @foreach (var entry in db.DailyWords.OrderByDescending(r => r.Date))
                                     {
-                                        <option value="@mode">@mode</option>
-                                    }
-                                </select>
-                            </td>
+                                        <tr>
+                                            <td>@entry.Date.ToString("yyyy-MM-dd")</td>
+                                            <td>@entry.Word</td>
 
-                            <td>
-                                <button class="btn btn-success btn-sm me-2" @onclick="() => SaveUser(user)">Save</button>
-                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteUser(user)">Delete</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
-} 
+                                            <td>
+                                                <button class="btn btn-danger btn-sm"
+                                                        @onclick="() => DeleteRecord(entry)">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+
+                        <h4 class="fw-bold mb-3">
+                            User Management
+                        </h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Permission</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var user in db.Login)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control"
+                                                       @bind="user.Username" />
+                                            </td>
+
+                                            <td>
+                                                <select class="form-select"
+                                                        @bind="user.UserPermission">
+
+                                                    @foreach (var mode in Enum.GetValues(typeof(Permission)))
+                                                    {
+                                                        <option value="@mode">
+                                                            @mode
+                                                        </option>
+                                                    }
+
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-success btn-sm me-2"
+                                                        @onclick="() => SaveUser(user)">
+                                                    Save
+                                                </button>
+
+                                                <button class="btn btn-danger btn-sm"
+                                                        @onclick="() => DeleteUser(user)">
+                                                    Delete
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            }
+    </div>
+</div>
+
+
+}
 else
 {
-    <div class="text-center mt-3 text-danger">You do not have permission to access this page.</div>
+
+    <div class="text-center mt-5">
+        <div class="alert alert-danger d-inline-block">
+            You do not have permission to access this page.
+        </div>
+    </div>
 }
+
+<style>
+    .card {
+        transition: all .2s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table-dark th {
+        border: none;
+    }
+
+    .list-group {
+        border-radius: 10px;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>
 
 @code {
     private DateOnly newDate = DateOnly.FromDateTime(DateTime.Now);
@@ -237,6 +346,7 @@ else
     private async Task DeleteUser(Login user)
     {
 		db.Login.Remove(user);
+        db.FriendRequests.RemoveAll(r => r.SenderID == user.UserID || r.ReceiverID == user.UserID);
 		await db.SaveData(Http);
     }
 }

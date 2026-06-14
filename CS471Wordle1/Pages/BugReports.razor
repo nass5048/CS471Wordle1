@@ -7,27 +7,82 @@
 @inject HttpClient Http
 @inject DataBase db
 
-<h4>Reported Bugs</h4>
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-lg border-0 p-4"
+         style="width: 420px; border-radius: 15px;">
 
-@if (bugReports.Any())
-{
-    @foreach (var bug in bugReports)
-    {
-        <div class="card p-3 my-2">
-            <b>Type:</b> @bug.Type <br />
-            <b>Reported By:</b> @GetUsername(bug.UserID) <br />
-            <b>Description:</b>
-            <div>@bug.BugDescription</div>
-            <button class="btn btn-danger mb-3" @onclick="() => DeleteBug(bug)">
-                Resolve
-            </button>
-        </div>
+        <h3 class="fw-bold text-center mb-4">
+            Bug Reports
+        </h3>
+
+        @if (bugReports.Any())
+        {
+            @foreach (var bug in bugReports)
+            {
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+
+                            <div>
+                                <h5 class="mb-1">
+                                    <span class="badge bg-info">
+                                        @bug.Type
+                                    </span>
+                                </h5>
+
+                                <div class="text-muted">
+                                    Reported by:
+                                    <strong>@GetUsername(bug.UserID)</strong>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-danger"
+                                    @onclick="() => DeleteBug(bug)">
+                                ✓ Resolve
+                            </button>
+
+                        </div>
+
+                        <div class="border rounded p-3 bg-light">
+                            @bug.BugDescription
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-success text-center mb-0">
+                No bugs reported yet.
+            </div>
+        }
+    </div>
+</div>
+
+<style> 
+    .card {
+        transition: all 0.2s ease;
     }
-}
-else
-{
-    <p>No bugs reported yet.</p>
-}
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+</style>
 
 @code {
     private List<BugReport> bugReports = new();

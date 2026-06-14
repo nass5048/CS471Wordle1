@@ -3,46 +3,65 @@
 @using WordleBackend.Enums
 @inject Login UserLogin
 @page "/stats"
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-lg border-0 p-4"
+         style="width: 1200px; border-radius: 15px;">
 
-<div class="stats-layout">
+        <h2 class="text-center fw-bold mb-4">
+            Statistics & Leaderboards
+        </h2>
 
-    <div class="stats-panel">
-        @if (UserLogin.UserPermission != Permission.Guest)
-        {
-            <div>Daily Word Stats</div>
-            <StatsViewer />
-        }
+        <div class="row g-4">
+
+            @if (UserLogin.UserPermission != Permission.Guest)
+            {
+                <div class="col-lg-5">
+                    <StatsViewer />
+                </div>
+            }
+
+            <div class="col-lg-7">
+
+                <Leaderboard IsFriendsOnly="false" />
+
+                @if (UserLogin.UserPermission != Permission.Guest)
+                {
+                    <div class="mt-4">
+                        <Leaderboard IsFriendsOnly="true" />
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="leaderboard-panel">
-        <Leaderboard IsFriendsOnly="false" Style="width: 400px;" />
-
-        @if (UserLogin.UserPermission != Permission.Guest)
-        {
-            <Leaderboard IsFriendsOnly="true" Style="width: 400px; margin-top: 20px;" />
-        }
-    </div>
-
 </div>
 
 <style>
-    .stats-layout {
-        display: flex;
-        gap: 30px;
-        padding: 20px;
-        align-items: flex-start;
+    .card {
+        transition: all .2s ease;
     }
 
-    .stats-panel {
-        position: sticky;
-        top: 20px;
-        height: fit-content;
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .table {
+        margin-bottom: 0;
     }
 
-    .leaderboard-panel {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+    .table-dark th {
+        border: none;
+    }
+
+    .table td,
+    .table th {
+        vertical-align: middle;
+    }
+
+    .alert {
+        border-radius: 10px;
     }
 </style>
 

@@ -7,94 +7,191 @@
 @inject HttpClient Http
 @inject DataBase db
 
-<h3>Friends</h3>
+<div class="d-flex justify-content-center mt-5">
+    <div class="card p-4 shadow-lg border-0" style="width: 420px; border-radius: 15px;">
 
-<input @bind="searchText" placeholder="Search users..." class="form-control" />
-<button class="btn btn-primary mt-2" @onclick="SearchUsers">Search</button>
+        <h2 class="text-center mb-4 fw-bold">Friends</h2>
 
-@if (searchResults.Any())
-{
-    <h4 class="mt-3">Search Results</h4>
-    @foreach (var user in searchResults)
-    {
-        <div class="card p-2 my-1">
-            <b>@user.Username</b>
+        <!-- Search Section -->
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Find Friends</h5>
 
-            @if (IsAlreadyFriends(user.UserID))
+            <div class="input-group">
+                <input @bind="searchText"
+                       placeholder="Search users..."
+                       class="form-control" />
+                <button class="btn btn-primary" @onclick="SearchUsers">
+                    Search
+                </button>
+            </div>
+        </div>
+
+        @if (searchResults.Any())
+        {
+            <div class="mb-4">
+                <h5 class="fw-bold mb-3">Search Results</h5>
+
+                @foreach (var user in searchResults)
+                {
+                    <div class="card shadow-sm border-0 mb-2">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <strong>@user.Username</strong>
+                            </div>
+
+                            <div>
+                                @if (IsAlreadyFriends(user.UserID))
+                                {
+                                    <span class="badge bg-success">
+                                        Already Friends
+                                    </span>
+                                }
+                                else if (HasPendingRequest(user.UserID))
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Request Pending
+                                    </span>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-success"
+                                            @onclick="() => AddFriend(user)">
+                                        Add Friend
+                                    </button>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <hr />
+
+        <!-- Friends List -->
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Your Friends</h5>
+
+            @if (friends.Any())
             {
-                <span class="text-success ms-2">Already Friends</span>
-            }
-            else if (HasPendingRequest(user.UserID))
-            {
-                <span class="text-warning ms-2">Request Pending</span>
+                @foreach (var f in friends)
+                {
+                    <div class="card shadow-sm border-0 mb-2">
+                        <div class="card-body">
+                            <strong>@f.Username</strong>
+                        </div>
+                    </div>
+                }
             }
             else
             {
-                <button class="btn btn-sm btn-success ms-2" @onclick="() => AddFriend(user)">
-                    Add Friend
-                </button>
+                <div class="alert alert-light text-center">
+                    No friends yet.
+                </div>
             }
         </div>
-    }
-}
 
-<hr />
+        <hr />
 
-<h4>Your Friends</h4>
-@if (friends.Any())
-{
-    @foreach (var f in friends)
-    {
-        <div class="card p-2 my-1">
-            @f.Username
+        <!-- Incoming Requests -->
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Incoming Friend Requests</h5>
+
+            @if (incomingRequests.Any())
+            {
+                @foreach (var req in incomingRequests)
+                {
+                    <div class="card shadow-sm border-0 mb-2">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <strong>@req.Username</strong>
+
+                            <div>
+                                <button class="btn btn-success me-2"
+                                        @onclick="() => AcceptFriend(req)">
+                                    Accept
+                                </button>
+
+                                <button class="btn btn-danger"
+                                        @onclick="() => RejectFriend(req)">
+                                    Reject
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-light text-center">
+                    No incoming requests.
+                </div>
+            }
         </div>
-    }
-}
-else
-{
-    <p>No friends yet.</p>
-}
 
-<hr />
+        <hr />
 
-<h4>Incoming Friend Requests</h4>
-@if (incomingRequests.Any())
-{
-    @foreach (var req in incomingRequests)
-    {
-        <div class="card p-2 my-1">
-            <b>@req.Username</b>
-            <button class="btn btn-sm btn-primary ms-2" @onclick="() => AcceptFriend(req)">
-                Accept
-            </button>
-            <button class="btn btn-sm btn-danger ms-2" @onclick="() => RejectFriend(req)">
-                Reject
-            </button>
+        <!-- Outgoing Requests -->
+        <div>
+            <h5 class="fw-bold mb-3">Outgoing Friend Requests</h5>
+
+            @if (outgoingRequests.Any())
+            {
+                @foreach (var req in outgoingRequests)
+                {
+                    <div class="card shadow-sm border-0 mb-2">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+
+                            <strong>@req.Username</strong>
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-light text-center">
+                    No outgoing requests.
+                </div>
+            }
         </div>
+
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: all 0.2s ease;
     }
-}
-else
-{
-    <p>No incoming requests.</p>
-}
 
-<hr />
+        .card:hover {
+            transform: translateY(-2px);
+        }
 
-<h4>Outgoing Friend Requests</h4>
-@if (outgoingRequests.Any())
-{
-    @foreach (var req in outgoingRequests)
-    {
-        <div class="card p-2 my-1">
-            <b>@req.Username</b> <span class="text-warning">Pending</span>
-        </div>
+    .friends-page .card-body {
+        padding: 1rem 1.25rem;
     }
-}
-else
-{
-    <p>No outgoing requests.</p>
-}
 
+    .btn {
+        border-radius: 10px;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.6em 0.8em;
+    }
+</style>
 @code {
     private string searchText = "";
     private List<FullFriend> searchResults = new();

@@ -19,14 +19,14 @@
     <main>
         <div class="top-row px-4">
             <ReportBug />
-            <div>@UserLogin.Username</div>
+            <div class="fw-bold text-center mb" style="padding:10px">@UserLogin.Username</div>
             @if (UserLogin.UserID ==0)
             {
-                <button class="ml-auto" @onclick="GOTOLogin">Login</button>
+                <button class="btn btn-success mb" @onclick="GOTOLogin">Login</button>
             }
             else
             {
-                <button class="ml-auto" @onclick="Logout">Logout</button>
+                <button class="btn btn-success mb" @onclick="Logout">Logout</button>
             }
             
         </div>
