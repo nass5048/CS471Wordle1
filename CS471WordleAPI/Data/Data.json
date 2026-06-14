@@ -90,32 +90,77 @@
       "username": "mike",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 1,
+        "gamesPlayed": 2,
         "gamesWon": 1,
-        "robotWins": 1,
+        "robotWins": 2,
         "robotLosses": 0,
-        "currentStreak": 1,
+        "currentStreak": 0,
         "maxStreak": 1,
-        "averageGuesses": 1,
-        "totalGuesses": 1,
-        "lastPlayed": "2026-06-13T00:00:00-04:00",
+        "averageGuesses": 3.5,
+        "totalGuesses": 7,
+        "lastPlayed": "2026-06-14T00:00:00-04:00",
         "dailyWordTime": null,
         "dailyGuesses": [
           {
-            "word": "pains",
+            "word": "tests",
             "colors": [
+              0,
+              1,
               2,
-              2,
-              2,
-              2,
-              2
+              0,
+              0
             ]
           },
-          null,
-          null,
-          null,
-          null,
-          null
+          {
+            "word": "allow",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "press",
+            "colors": [
+              0,
+              0,
+              1,
+              1,
+              0
+            ]
+          },
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              1,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              1,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              1,
+              2,
+              0,
+              0
+            ]
+          }
         ],
         "robotCount": 0
       },
@@ -269,20 +314,29 @@
         "maxStreak": 0,
         "averageGuesses": 0,
         "totalGuesses": 0,
-        "lastPlayed": "2026-06-13T22:31:52.771-04:00",
+        "lastPlayed": "2026-06-14T12:25:03.89-04:00",
         "dailyWordTime": null,
         "dailyGuesses": [
           {
-            "word": "allow",
+            "word": "tests",
             "colors": [
+              0,
               1,
-              0,
-              0,
+              2,
               0,
               0
             ]
           },
-          null,
+          {
+            "word": "pains",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
           null,
           null,
           null,
@@ -295,6 +349,66 @@
     {
       "userID": 7,
       "username": "qwel",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "totalGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 8,
+      "username": "Bitch",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "totalGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 9,
+      "username": "qwer",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "totalGuesses": 0,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 10,
+      "username": "allow",
       "password": "123456",
       "userStats": {
         "gamesPlayed": 0,
