@@ -10,7 +10,7 @@ namespace WordleBackend.Enums
     // Types of challenge modes
     public enum Challenge
     {
-        Normal,
+        None,
         AllGreen,
         AllYellow,
         HardMode,
