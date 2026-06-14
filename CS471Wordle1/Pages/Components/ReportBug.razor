@@ -29,8 +29,17 @@
             <label>Description</label>
             <textarea class="form-control mb-3" @bind="newBug.BugDescription"></textarea>
 
-            <button class="btn btn-primary me-2" @onclick="SubmitBug">Submit</button>
-            <button class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+            <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-danger flex-fill"
+                        @onclick="SubmitBug">
+                    Submit Report
+                </button>
+
+                <button class="btn btn-outline-secondary flex-fill"
+                        @onclick="CloseModal">
+                    Cancel
+                </button>
+            </div>
         </div>
     </div>
 }

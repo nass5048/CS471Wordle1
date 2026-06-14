@@ -3,58 +3,63 @@
 @using CS471Wordle1.Pages.Components
 @inject Login UserLogin
 
-<div class="stats">
-    <table>
-        <tbody>
-            <tr>
-                <td>Current Streak</td>
-                <td>@stats.CurrentStreak</td>
-            </tr>
-            <tr>
-                <td>Max Daily streak</td>
-                <td>@stats.MaxStreak</td>
-            </tr>
-            <tr>
-                <td>Games completed</td>
-                <td>@stats.GamesWon</td>
-            </tr>
-            <tr>
-                <td>Games Played</td>
-                <td>@stats.GamesPlayed</td>
-            </tr>
-            <tr>
-                <td>Average Guesses</td>
-                <td>@stats.AverageGuesses</td>
-            </tr>
-            <tr>
-                <td>Last Played</td>
-                <td>@stats.LastPlayed</td>
-            </tr>
-            <tr>
-                <td>Wins against robot</td>
-                <td>@stats.RobotWins</td>
-            </tr>
-            <tr>
-                <td>Losses to robot</td>
-                <td>@stats.RobotLosses</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse; /* Collapses borders into a single line */
-    }
+<div class="card shadow-sm border-0">
+    <div class="card-body">
 
-    th, td {
-        padding: 8px; /* Adds space inside cells */
-        text-align: left; /* Aligns text to the left within cells */
-    }
-    .stats{
-        width: 400px;
-    }
-</style>
+        <h4 class="fw-bold mb-3">
+            Your Statistics
+        </h4>
+
+        <table class="table table-hover align-middle mb-0">
+
+            <tbody>
+
+                <tr>
+                    <td><strong>Current Streak</strong></td>
+                    <td>@stats.CurrentStreak</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Max Daily Streak</strong></td>
+                    <td>@stats.MaxStreak</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Games Completed</strong></td>
+                    <td>@stats.GamesWon</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Games Played</strong></td>
+                    <td>@stats.GamesPlayed</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Average Guesses</strong></td>
+                    <td>@stats.AverageGuesses</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Last Played</strong></td>
+                    <td>@stats.LastPlayed</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Wins vs Robot</strong></td>
+                    <td>@stats.RobotWins</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Losses vs Robot</strong></td>
+                    <td>@stats.RobotLosses</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
 @code {
     public Stats stats = new Stats();
     protected override Task OnInitializedAsync()
