@@ -237,6 +237,7 @@ else
     private async Task DeleteUser(Login user)
     {
 		db.Login.Remove(user);
+        db.FriendRequests.RemoveAll(r => r.SenderID == user.UserID || r.ReceiverID == user.UserID);
 		await db.SaveData(Http);
     }
 }
