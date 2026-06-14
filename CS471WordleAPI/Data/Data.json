@@ -1,60 +1,12 @@
 {
   "dailyWords": [
     {
-      "date": "2026-05-07",
-      "word": "thief"
-    },
-    {
-      "date": "2026-05-08",
-      "word": "tests"
-    },
-    {
-      "date": "2026-05-06",
-      "word": "tests"
-    },
-    {
-      "date": "2026-05-11",
-      "word": "wilds"
-    },
-    {
-      "date": "2026-05-05",
-      "word": "child"
-    },
-    {
-      "date": "2026-05-29",
-      "word": "stabs"
-    },
-    {
-      "date": "2026-05-31",
-      "word": "tests"
-    },
-    {
-      "date": "2026-06-01",
-      "word": "alone"
-    },
-    {
-      "date": "0001-01-01",
-      "word": "wheel"
-    },
-    {
-      "date": "2026-06-04",
-      "word": "kebab"
-    },
-    {
-      "date": "2026-06-05",
-      "word": "jumps"
-    },
-    {
-      "date": "2026-05-10",
-      "word": "water"
+      "date": "2026-06-14",
+      "word": "annoy"
     },
     {
       "date": "2026-06-13",
-      "word": "pains"
-    },
-    {
-      "date": "2026-06-14",
-      "word": "fused"
+      "word": "scuba"
     }
   ],
   "login": [
@@ -87,363 +39,77 @@
     },
     {
       "userID": 2,
-      "username": "mike",
+      "username": "Mike",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 2,
-        "gamesWon": 1,
-        "robotWins": 2,
+        "gamesPlayed": 12,
+        "gamesWon": 12,
+        "robotWins": 0,
         "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 1,
-        "averageGuesses": 3.5,
-        "totalGuesses": 7,
-        "lastPlayed": "2026-06-14T00:00:00-04:00",
+        "currentStreak": 12,
+        "maxStreak": 12,
+        "averageGuesses": 4,
+        "totalGuesses": 48,
+        "lastPlayed": null,
         "dailyWordTime": null,
-        "dailyGuesses": [
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "press",
-            "colors": [
-              0,
-              0,
-              1,
-              1,
-              0
-            ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          }
-        ],
+        "dailyGuesses": null,
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 3,
+      "username": "Chase",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 10,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 10,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 6,
+        "totalGuesses": 60,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
         "robotCount": 0
       },
       "userPermission": 1
     },
     {
       "userID": 4,
-      "username": "abc",
+      "username": "Jamie",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 2,
-        "gamesWon": 2,
-        "robotWins": 2,
-        "robotLosses": 0,
-        "currentStreak": 1,
-        "maxStreak": 1,
-        "averageGuesses": 3,
-        "totalGuesses": 6,
-        "lastPlayed": "2026-06-14T00:00:00-04:00",
-        "dailyWordTime": "13:32:48.8460000",
-        "dailyGuesses": [
-          {
-            "word": "fuses",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              0
-            ]
-          },
-          {
-            "word": "fused",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "fused",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          null,
-          null
-        ],
+        "gamesPlayed": 10,
+        "gamesWon": 8,
+        "robotWins": 8,
+        "robotLosses": 2,
+        "currentStreak": 6,
+        "maxStreak": 6,
+        "averageGuesses": 3.2,
+        "totalGuesses": 32,
+        "lastPlayed": null,
+        "dailyWordTime": null,
+        "dailyGuesses": null,
         "robotCount": 0
       },
       "userPermission": 1
     },
     {
       "userID": 5,
-      "username": "asd",
+      "username": "Jeanna",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 1,
-        "gamesWon": 0,
-        "robotWins": 1,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 6,
-        "totalGuesses": 6,
-        "lastPlayed": "2026-06-13T00:00:00-04:00",
-        "dailyWordTime": null,
-        "dailyGuesses": [
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              2
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              1,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              1,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              1,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              1,
-              0,
-              0,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "allow",
-            "colors": [
-              1,
-              0,
-              0,
-              0,
-              0
-            ]
-          }
-        ],
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 6,
-      "username": "qwe",
-      "password": "123456",
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
-        "lastPlayed": "2026-06-14T12:25:03.89-04:00",
-        "dailyWordTime": null,
-        "dailyGuesses": [
-          {
-            "word": "tests",
-            "colors": [
-              0,
-              1,
-              2,
-              0,
-              0
-            ]
-          },
-          {
-            "word": "pains",
-            "colors": [
-              0,
-              0,
-              0,
-              0,
-              1
-            ]
-          },
-          null,
-          null,
-          null,
-          null
-        ],
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 7,
-      "username": "qwel",
-      "password": "123456",
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
-        "lastPlayed": null,
-        "dailyWordTime": null,
-        "dailyGuesses": null,
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 8,
-      "username": "Bitch",
-      "password": "123456",
-      "userStats": {
-        "gamesPlayed": 1,
+        "gamesPlayed": 2,
         "gamesWon": 1,
-        "robotWins": 1,
+        "robotWins": 0,
         "robotLosses": 0,
-        "currentStreak": 1,
+        "currentStreak": 0,
         "maxStreak": 1,
-        "averageGuesses": 1,
-        "totalGuesses": 1,
-        "lastPlayed": "2026-06-14T00:00:00-04:00",
-        "dailyWordTime": "00:00:05.1920000",
-        "dailyGuesses": [
-          {
-            "word": "fused",
-            "colors": [
-              2,
-              2,
-              2,
-              2,
-              2
-            ]
-          },
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 9,
-      "username": "qwer",
-      "password": "123456",
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
-        "lastPlayed": null,
-        "dailyWordTime": null,
-        "dailyGuesses": null,
-        "robotCount": 0
-      },
-      "userPermission": 1
-    },
-    {
-      "userID": 10,
-      "username": "allow",
-      "password": "123456",
-      "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
-        "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
+        "averageGuesses": 3,
+        "totalGuesses": 6,
         "lastPlayed": null,
         "dailyWordTime": null,
         "dailyGuesses": null,
@@ -455,35 +121,34 @@
   "friendRequests": [
     {
       "senderID": 2,
-      "receiverID": 1,
+      "receiverID": 3,
+      "status": 1
+    },
+    {
+      "senderID": 2,
+      "receiverID": 4,
+      "status": 1
+    },
+    {
+      "senderID": 3,
+      "receiverID": 4,
+      "status": 1
+    },
+    {
+      "senderID": 3,
+      "receiverID": 5,
       "status": 1
     },
     {
       "senderID": 5,
       "receiverID": 2,
-      "status": 1
+      "status": 0
+    },
+    {
+      "senderID": 5,
+      "receiverID": 4,
+      "status": 0
     }
   ],
-  "bugReports": [
-    {
-      "userID": 2,
-      "type": 2,
-      "bugDescription": "test"
-    },
-    {
-      "userID": 0,
-      "type": 1,
-      "bugDescription": "test"
-    },
-    {
-      "userID": 0,
-      "type": 1,
-      "bugDescription": "test"
-    },
-    {
-      "userID": 1,
-      "type": 2,
-      "bugDescription": "broke my foot. can\u0027t dance"
-    }
-  ]
+  "bugReports": []
 }
