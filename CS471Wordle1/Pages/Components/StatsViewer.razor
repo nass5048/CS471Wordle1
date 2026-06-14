@@ -41,7 +41,7 @@
 
                 <tr>
                     <td><strong>Last Played</strong></td>
-                    <td>@stats.LastPlayed</td>
+                    <td>@(stats.LastPlayed.HasValue ? stats.LastPlayed.Value.ToString("yyyy-MM-dd") : null)</td>
                 </tr>
 
                 <tr>

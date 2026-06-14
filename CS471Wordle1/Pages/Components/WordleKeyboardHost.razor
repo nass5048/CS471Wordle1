@@ -106,7 +106,19 @@
         await db.LoadData(Http);
         await ValidWords.LoadValidWords(Http);
         StartNewGame();
-
+        if (gameMode == GameMode.Daily)
+        {
+            if (UserLogin.UserStats.LastPlayed.HasValue &&
+                    UserLogin.UserStats.LastPlayed.Value.Date.AddDays(1) == DateTime.Today)
+            {
+                UserLogin.UserStats.CurrentStreak++;
+            }
+            else
+            {
+                UserLogin.UserStats.CurrentStreak = 1;
+            }
+            await db.SaveData(Http);
+        }
         // Restore previous game safely (stats.Guesses may be null)
         if (UserLogin.UserStats.LastPlayed.HasValue && UserLogin.UserStats.LastPlayed.Value.Date == DateTime.Today && gameMode == GameMode.Daily)
         {
