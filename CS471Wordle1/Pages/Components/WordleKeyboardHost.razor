@@ -116,7 +116,7 @@
                 .Concat(Enumerable.Repeat<WordGuessResponse?>(null, 6)) // pad to 6
                 .Take(6) // final length 6
                 .ToList();
-            
+
         }
         if ((!UserLogin.UserStats.LastPlayed.HasValue || UserLogin.UserStats.LastPlayed.Value.Date != DateTime.Today) && gameMode == GameMode.Daily)
         {
@@ -128,7 +128,7 @@
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
 
-        if (CurrentRow != 0 && Guesses[CurrentRow - 1].Word.Contains("Solution"))
+        if (CurrentRow != 0 && Guesses[CurrentRow - 1].Word.Equals(Solution, StringComparison.OrdinalIgnoreCase))
         {
             StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
             CurrentRow = 7;

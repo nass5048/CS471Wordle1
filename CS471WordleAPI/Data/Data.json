@@ -171,39 +171,49 @@
       "username": "abc",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
+        "gamesPlayed": 2,
+        "gamesWon": 2,
+        "robotWins": 2,
         "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
-        "lastPlayed": "2026-06-13T15:13:53.055-04:00",
-        "dailyWordTime": "00:00:11.0320000",
+        "currentStreak": 1,
+        "maxStreak": 1,
+        "averageGuesses": 3,
+        "totalGuesses": 6,
+        "lastPlayed": "2026-06-14T00:00:00-04:00",
+        "dailyWordTime": "13:32:48.8460000",
         "dailyGuesses": [
           {
-            "word": "tests",
+            "word": "fuses",
             "colors": [
-              0,
-              0,
-              0,
-              0,
+              2,
+              2,
+              2,
+              2,
+              0
+            ]
+          },
+          {
+            "word": "fused",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
               2
             ]
           },
           {
-            "word": "allow",
+            "word": "tests",
             "colors": [
+              0,
               1,
-              0,
-              0,
+              2,
               0,
               0
             ]
           },
           {
-            "word": "pains",
+            "word": "fused",
             "colors": [
               2,
               2,
@@ -212,7 +222,6 @@
               2
             ]
           },
-          null,
           null,
           null
         ],
@@ -371,17 +380,33 @@
       "username": "Bitch",
       "password": "123456",
       "userStats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
-        "robotWins": 0,
+        "gamesPlayed": 1,
+        "gamesWon": 1,
+        "robotWins": 1,
         "robotLosses": 0,
-        "currentStreak": 0,
-        "maxStreak": 0,
-        "averageGuesses": 0,
-        "totalGuesses": 0,
-        "lastPlayed": null,
-        "dailyWordTime": null,
-        "dailyGuesses": null,
+        "currentStreak": 1,
+        "maxStreak": 1,
+        "averageGuesses": 1,
+        "totalGuesses": 1,
+        "lastPlayed": "2026-06-14T00:00:00-04:00",
+        "dailyWordTime": "00:00:05.1920000",
+        "dailyGuesses": [
+          {
+            "word": "fused",
+            "colors": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
         "robotCount": 0
       },
       "userPermission": 1
