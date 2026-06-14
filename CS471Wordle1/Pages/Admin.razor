@@ -93,7 +93,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach (var entry in db.DailyWords.OrderBy(r => r.Date))
+                                    @foreach (var entry in db.DailyWords.OrderByDescending(r => r.Date))
                                     {
                                         <tr>
                                             <td>@entry.Date.ToString("yyyy-MM-dd")</td>
