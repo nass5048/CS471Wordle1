@@ -9,7 +9,7 @@ namespace WordleBackend.Enums
     // Types of Game Modes
     public enum GameMode
     {
-        Infinite,
         Daily,
+        Infinite,
     }
 }

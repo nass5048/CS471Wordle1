@@ -177,8 +177,125 @@
     },
     {
       "userID": 5,
-      "username": "mymom",
-      "password": "abc123",
+      "username": "asd",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 1,
+        "gamesWon": 0,
+        "robotWins": 1,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 6,
+        "totalGuesses": 6,
+        "lastPlayed": "2026-06-13T00:00:00-04:00",
+        "dailyWordTime": null,
+        "dailyGuesses": [
+          {
+            "word": "tests",
+            "colors": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 6,
+      "username": "qwe",
+      "password": "123456",
+      "userStats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "robotWins": 0,
+        "robotLosses": 0,
+        "currentStreak": 0,
+        "maxStreak": 0,
+        "averageGuesses": 0,
+        "totalGuesses": 0,
+        "lastPlayed": "2026-06-13T22:31:52.771-04:00",
+        "dailyWordTime": null,
+        "dailyGuesses": [
+          {
+            "word": "allow",
+            "colors": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "robotCount": 0
+      },
+      "userPermission": 1
+    },
+    {
+      "userID": 7,
+      "username": "qwel",
+      "password": "123456",
       "userStats": {
         "gamesPlayed": 0,
         "gamesWon": 0,

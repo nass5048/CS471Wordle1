@@ -1,4 +1,5 @@
 ﻿@page "/settings"
+@using System.ComponentModel.DataAnnotations
 @using WordleAPI
 @using WordleAPI.Classes
 @using WordleBackend.Enums
@@ -22,6 +23,8 @@
                 Reset Username
             </button>
 
+            <div class="text-center mt-3 text-danger">@UserNameMessage</div>
+
             <hr />
 
             <!-- Reset Password Section -->
@@ -41,7 +44,7 @@
                 Reset Password
             </button>
 
-            <div class="text-center mt-3 text-info">@Message</div>
+            <div class="text-center mt-3 text-danger">@PasswordMessage</div>
         </div>
     </div>
 } else
@@ -50,10 +53,13 @@
 }
 
 @code {
+    [MinLength(3)]
     string NewPassword = "";
     string ConfirmPassword = "";
+    [MinLength(3)]
 	string NewUsername = "";
-    string Message = "";
+    string UserNameMessage = "";
+    string PasswordMessage = "";
     protected override async Task OnInitializedAsync()
     {
         await db.LoadData(Http);
@@ -63,13 +69,18 @@
     {
         if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))
         {
-            Message = "Please fill out both fields.";
+            PasswordMessage = "Please fill out both fields.";
             return;
         }
 
         if (NewPassword != ConfirmPassword)
         {
-            Message = "Passwords do not match.";
+            PasswordMessage = "Passwords do not match.";
+            return;
+        }
+        if(NewPassword.Length < 6)
+        {
+            PasswordMessage = "Password must be at least 6 characters long.";
             return;
         }
         await db.LoadData(Http);
@@ -77,21 +88,26 @@
         db.UpdateUserData(UserLogin);
         await db.SaveData(Http);
         // TODO: Call your API to update the password
-        Message = "Password successfully reset.";
+        PasswordMessage = "Password successfully reset.";
     }
 
     async Task ResetUsername()
     {
         if (string.IsNullOrWhiteSpace(NewUsername))
         {
-            Message = "Please enter a new username.";
+            UserNameMessage = "Please enter a new username.";
+            return;
+        }
+        if (NewUsername.Length < 3)
+        {
+            UserNameMessage = "Username must be at least 3 characters long.";
             return;
         }
         foreach (var logins in db.Login)
         {
             if (logins.Username == NewUsername)
             {
-                Message = "Username already exists.";
+                UserNameMessage = "Username already exists.";
                 return;
             }
         }
@@ -99,7 +115,7 @@
         UserLogin.Username = NewUsername;
         db.UpdateUserData(UserLogin);
         await db.SaveData(Http);
-        Message = "Username successfully reset.";
+        UserNameMessage = "Username successfully reset.";
 		StateHasChanged();
     }
 }

@@ -54,6 +54,7 @@ public class Stats
 
         if (win)
         {
+            DailyWordTime = DateTime.Now - LastPlayed;
             GamesWon++;
 
             if (LastPlayed.HasValue &&

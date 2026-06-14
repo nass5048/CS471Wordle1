@@ -116,11 +116,15 @@
                 .Concat(Enumerable.Repeat<WordGuessResponse?>(null, 6)) // pad to 6
                 .Take(6) // final length 6
                 .ToList();
-            await OnGameCompleted.InvokeAsync(null); 
+            
         }
         if ((!UserLogin.UserStats.LastPlayed.HasValue || UserLogin.UserStats.LastPlayed.Value.Date != DateTime.Today) && gameMode == GameMode.Daily)
         {
+            UserLogin.UserStats.DailyGuesses = new List<WordGuessResponse?>();
             UserLogin.UserStats.LastPlayed = DateTime.Now;
+            UserLogin.UserStats.DailyWordTime = null;
+            db.UpdateUserData(UserLogin);
+            await db.SaveData(Http);
         }
         CurrentRow = Guesses.Count(g => g != null); // continue after last guess
 
@@ -128,6 +132,7 @@
         {
             StatusMessage = $"Game over — solution: {Solution.ToUpperInvariant()}";
             CurrentRow = 7;
+            await OnGameCompleted.InvokeAsync(null);
         }
     }
 

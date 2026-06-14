@@ -57,7 +57,8 @@
         // Build leaderboard
         leaderboard = db.Login
             .Where(x => x.UserStats.LastPlayed.HasValue &&
-                        x.UserStats.LastPlayed.Value.Date == DateTime.Today)
+                        x.UserStats.LastPlayed.Value.Date == DateTime.Today &&
+                        x.UserStats.DailyWordTime != null)
             .Select(s => new LeaderboardEntry
             {
                 UserID = s.UserID,
