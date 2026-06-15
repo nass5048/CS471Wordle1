@@ -76,8 +76,8 @@ else
 
 			if (gameMode == GameMode.Daily)
 			{
-				var word = db.DailyWords.First(w => w.Date == DateOnly.FromDateTime(DateTime.Today));
-				if (word != null)
+				var word = db.DailyWords.FirstOrDefault(w => w.Date == DateOnly.FromDateTime(DateTime.Today));
+				if (word != default)
 				{
 					dailyWord = new WordResponse() { Solution = word.Word };
 				}
