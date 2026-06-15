@@ -147,7 +147,7 @@
 
         if (CurrentRow != 0 && Guesses[CurrentRow - 1].Word.Equals(Solution, StringComparison.OrdinalIgnoreCase))
         {
-            StatusMessage = $"Game over � solution: {Solution.ToUpperInvariant()}";
+            StatusMessage = $"Game over - solution: {Solution.ToUpperInvariant()}";
             CurrentRow = 7;
             await OnGameCompleted.InvokeAsync(null);
         }
@@ -292,7 +292,7 @@
 
         if (CurrentRow >= 6)
         {
-            StatusMessage = $"Game over � solution: {Solution.ToUpperInvariant()}";
+            StatusMessage = $"Game over - solution: {Solution.ToUpperInvariant()}";
             await UserLogin.UserStats.FinishGame(false, Guesses, gameMode);
             db.UpdateUserData(UserLogin);
             await db.SaveData(Http);
