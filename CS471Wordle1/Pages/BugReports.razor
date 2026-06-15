@@ -85,26 +85,33 @@
 </style>
 
 @code {
+    // Stores bug reports loaded from the database
     private List<BugReport> bugReports = new();
+
+    // Creates a BugReport object when a user submits a bug
     private BugReport newBug = new BugReport();
 
+    // Loads bug reports when page is opened
     protected override async Task OnInitializedAsync()
     {
         await LoadBugs();
     }
 
+    // Loads bug reports
     private async Task LoadBugs()
     {
         await db.LoadData(Http);
         bugReports = db.BugReports.ToList();
     }
 
+    // Returns the username for the associated bug report
     private string GetUsername(long id)
     {
         var user = db.Login.FirstOrDefault(x => x.UserID == id);
         return user?.Username ?? "Unknown";
     }
 
+    // Remove bug report after resolved
     private async Task DeleteBug(BugReport bug)
     {
         await db.LoadData(Http);

@@ -39,6 +39,7 @@
             </select>
         </div>
 
+        // AI settings > Only used is Challenge is "None" and "HardMode"
         @if (model.challenge == Challenge.None || model.challenge == Challenge.HardMode)
         {
             <div class="mb-3">
@@ -64,7 +65,8 @@
 
 @code {
 
-
+    // Starts a new game using the selected settings
+    // and navigates to the game page.
     private void StartGame()
     {
         if (!(model.challenge == Challenge.None || model.challenge == Challenge.HardMode))
@@ -74,16 +76,19 @@
         Navigation.NavigateTo($"/game/{model.gameMode}/{model.challenge}/{model.UseAI}");
     }
 
-
+    // Saves selected game settings
     private WordleSelector model = new WordleSelector();
-
+    
+    // Contents for game settings including:
+    // challenge settings, game mode, and AI settings
     public class WordleSelector
-    {
+    { 
         public Challenge challenge { get; set; }
         public GameMode gameMode { get; set; }
         public bool UseAI { get; set; } = true;
     }
 
+    // Navigates to the 'How To Play' button
     private void GoToHowToPlay()
     {
         Navigation.NavigateTo("/how-to-play");

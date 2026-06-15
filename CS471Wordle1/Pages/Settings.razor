@@ -53,18 +53,26 @@
 }
 
 @code {
+
+    // Stores new and confirmed password entered by the user
     [MinLength(3)]
     string NewPassword = "";
     string ConfirmPassword = "";
+
+    // Stores new username with message and password messages
     [MinLength(3)]
 	string NewUsername = "";
     string UserNameMessage = "";
     string PasswordMessage = "";
+    
+    // Initalizes user data
     protected override async Task OnInitializedAsync()
     {
         await db.LoadData(Http);
         await base.OnInitializedAsync();
     }
+    
+    // Updates user's password
     async Task ResetPassword()
     {
         if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))
@@ -91,6 +99,7 @@
         PasswordMessage = "Password successfully reset.";
     }
 
+    // Updates user's nusername
     async Task ResetUsername()
     {
         if (string.IsNullOrWhiteSpace(NewUsername))
