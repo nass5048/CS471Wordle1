@@ -44,7 +44,7 @@ public class WordGuessResponse
         {
             // Game Modes vases
             switch (challenge) {
-                case Challenge.None:
+                case Challenge.Normal:
                 case Challenge.HardMode:
                     if (CorrectWord[i] == GuessedWord[i])
                     {

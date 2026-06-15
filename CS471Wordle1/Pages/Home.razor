@@ -40,7 +40,7 @@
         </div>
 
         @*AI settings > Only used is Challenge is "None" and "HardMode"*@
-        @if (model.challenge == Challenge.None || model.challenge == Challenge.HardMode)
+        @if (model.challenge == Challenge.Normal || model.challenge == Challenge.HardMode)
         {
             <div class="mb-3">
                 <InputCheckbox @bind-Value="model.UseAI" class="form-check-input" id="useAI" />
@@ -69,7 +69,7 @@
     // and navigates to the game page.
     private void StartGame()
     {
-        if (!(model.challenge == Challenge.None || model.challenge == Challenge.HardMode))
+        if (!(model.challenge == Challenge.Normal || model.challenge == Challenge.HardMode))
         {
             model.UseAI = false;
         }

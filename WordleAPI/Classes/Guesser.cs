@@ -69,7 +69,7 @@ public class Guesser
         if (bestGuess == null)
             return "";
 
-        FailedGuesses.Add(new WordGuessResponse(correctWord, bestGuess.Word, Challenge.None, true));
+        FailedGuesses.Add(new WordGuessResponse(correctWord, bestGuess.Word, Challenge.Normal, true));
         return bestGuess.Word;
     }
 
