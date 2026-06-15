@@ -244,7 +244,7 @@ else
     {
         await LoadData();
         await ValidWords.LoadValidWords(Http);
-        AvailableWords = ValidWords.AllWords.Where(w => w.CanUse).Select(w => w.Word).ToList();
+        AvailableWords = ValidWords.AllWords.Select(w => w.Word).ToList();
     }
 
     private async Task LoadData()
