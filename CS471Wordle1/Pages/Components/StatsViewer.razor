@@ -61,7 +61,11 @@
     </div>
 </div>
 @code {
+    
+    // Stores stats displayed
     public Stats stats = new Stats();
+
+    // Loads user's stats
     protected override Task OnInitializedAsync()
     {
 		stats = UserLogin.UserStats;

@@ -5,12 +5,15 @@
 
 <Wordle challenge="challenge" gameMode="gameMode" UseAI="useAI"/>
 @code {
+    // Receives selected challenge mode
     [Parameter]
     public string challengeParam { get; set; }
 
+    // Receives selected game mode
     [Parameter]
     public string gameModeParam { get; set; }
 
+    // Determines if AI opponent is enabled by user
     [Parameter]
     public bool useAI { get; set; }
 

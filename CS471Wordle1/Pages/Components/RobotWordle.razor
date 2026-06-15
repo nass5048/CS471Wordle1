@@ -68,19 +68,23 @@
 
 
 @code {
+    // Reference used for keyboard focus
     private ElementReference ContainerRef;
     private bool _shouldFocus;
 
+    // Solution word AI is trying to solve + Hide results
     [Parameter]
     public string Solution { get; set; }
     [Parameter]
     public bool Hide { get; set; }
 
+    // AI's current row, current guess, and all current guesses made by the AI
     private int CurrentRow { get; set; } = 0;
     private string CurrentGuess { get; set; } = "";
     private List<WordGuessResponse?> Guesses { get; set; } = new();
     private string StatusMessage { get; set; } = "";
 
+    // Tracks keyboard states for AI
     private Dictionary<string, PlayerKeyboard.KeyState> KeyStates { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
@@ -100,6 +104,7 @@
         //_ = AutoSolve();
     }
 
+    // Starts new game for the AI
     private void StartNewGame()
     {
         Solution = (Solution ?? "").Trim().ToLowerInvariant();
@@ -113,6 +118,7 @@
         _shouldFocus = true;
     }
 
+    // Determines if the AI's game is over
     private bool IsGameOver() => CurrentRow >= 6;
 
     // Guarded: check bounds and nulls before indexing Guesses
@@ -160,6 +166,7 @@
     }
 
 
+    // Automatically solves the game using the AI 
     private async Task AutoSolve()
     {
         try

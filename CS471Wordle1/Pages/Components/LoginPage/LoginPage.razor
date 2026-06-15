@@ -38,9 +38,11 @@
 </EditForm>
 
 @code {
+    // Stores login credentials and displays messages
     LoginModel model = new();
     string message = "";
 
+    // Authenticates user and displays correct screens based on permissions
     async Task Login()
     {
         if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
@@ -52,6 +54,8 @@
         message = $"Attempting login for {model.Username}";
         SpinnerService.Show();
         await db.LoadData(Http);
+
+        // Verifies credentials
         foreach (var login in db.Login)
         {
             if (login.Username == model.Username && login.Password == model.Password)
@@ -73,6 +77,8 @@
         message = "Invalid username or password.";
         SpinnerService.Hide();
     }
+
+    // Represents login form data entered by the user
     public class LoginModel
     {
         [Required]

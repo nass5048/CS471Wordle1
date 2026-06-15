@@ -247,6 +247,7 @@ else
         AvailableWords = ValidWords.AllWords.Select(w => w.Word).ToList();
     }
 
+    // Loads admin data 
     private async Task LoadData()
     {
         isLoading = true;
@@ -256,6 +257,7 @@ else
         isLoading = false;
     }
 
+    // Dates available for daily words
     private DateOnly GetFirstAvailableDate()
     {
         var yesterday = DateOnly.FromDateTime(DateTime.Today).AddDays(-1);
@@ -278,6 +280,7 @@ else
         return check;
     }
 
+    // Filters valid words from inputted search word
     private void FilterWords(ChangeEventArgs e)
     {
         wordSearch = e.Value?.ToString() ?? "";
@@ -294,6 +297,7 @@ else
             .ToList();
     }
 
+    // Selects a word from the list of available daily words
     private void SelectWord(string word)
     {
         newWord = word;
@@ -301,6 +305,7 @@ else
         filteredWords.Clear();
     }
 
+    // Adds daily word
     private async Task AddRecord()
     {
         await db.LoadData(Http);
@@ -330,6 +335,7 @@ else
 		newDate = GetFirstAvailableDate();
     }
 
+    // Deletes a daily word
     private async Task DeleteRecord(DailyWords entry)
     {
 		//await db.LoadData(Http);
@@ -338,12 +344,14 @@ else
         DailyWordMessage = $"Succesfully removed {entry.Word}.";
     }
 
+    // Displays user
     private async Task SaveUser(Login user)
     {
 		db.UpdateUserData(user);
 		await db.SaveData(Http);
     }
 
+    // Deletes user
     private async Task DeleteUser(Login user)
     {
 		db.Login.Remove(user);

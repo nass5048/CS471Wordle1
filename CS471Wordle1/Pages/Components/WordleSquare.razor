@@ -21,12 +21,15 @@
 </style>
 
 @code {
+	// Displays letter in the tile
 	[Parameter]
 	public char Letter { get; set; }
 
+	// Displays color state of the title
 	[Parameter]
 	public ResponseColor Color { get; set; }
 
+	// Displays color associated with the state of the tile
 	private string GetColor()
 	{
 		return Color switch

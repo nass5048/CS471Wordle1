@@ -116,6 +116,7 @@
         new[] { KeyEnter,"z","x","c","v","b","n","m", KeyBackspace }
     };
 
+    // Returns accessabiity label for keys
     private string GetAriaLabel(string key)
         => key switch
         {
@@ -124,6 +125,7 @@
             _ => $"press {key}"
         };
 
+    // Returns classes associated with key
     private string GetKeyClasses(string key)
     {
         var state = GetKeyState(key);
@@ -148,6 +150,7 @@
         return KeyState.Default;
     }
 
+    // Handles clicks from user on the keyboard displayed on screen
     private async Task OnButtonClick(string key)
     {
         if (DisabledKeySet.Contains(key)) return;

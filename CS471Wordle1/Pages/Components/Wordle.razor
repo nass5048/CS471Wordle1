@@ -49,6 +49,7 @@ else
 </style>
 
 @code {
+	// Selected game mode, challenge and if AI is enabled
 	[Parameter]
 	public GameMode gameMode { get; set; }
 	[Parameter]
@@ -60,6 +61,7 @@ else
 
 	private bool showContinue {get; set; } = false;
 
+	// Current solution word and stores daily word info
 	string? correctWord{ get;set; }
 	WordResponse? dailyWord { get; set; }
 
@@ -107,19 +109,21 @@ else
 		SpinnerService.Hide();
 	}
 
+	// Stores solution word
 	public class WordResponse
 	{
 		public string Solution { get; set; }
 	}
 
+	// When player completes the game
 	public void completeDaily()
 	{
 		HideRobot = false;
-		//TODO need button to show up to continue to next game if not daily
 		showContinue = true;
 
 	}
 
+	// Starts a new game or goes to home page
 	public async Task Continue()
 	{
 		if (gameMode == GameMode.Daily)

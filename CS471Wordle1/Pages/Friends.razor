@@ -193,10 +193,19 @@
     }
 </style>
 @code {
+    // Characters typed into the search box
     private string searchText = "";
+
+    // Results from search
     private List<FullFriend> searchResults = new();
+
+    // Accepted friends
     private List<FullFriend> friends = new();
+
+    // Friend requested received
     private List<FullFriend> incomingRequests = new();
+
+    // Friend requests sent
     private List<FullFriend> outgoingRequests = new();
 
     protected override async Task OnInitializedAsync()
@@ -204,6 +213,7 @@
         await LoadFriendData();
     }
 
+    // Loads friend and request info 
     private async Task LoadFriendData()
     {
         await db.LoadData(Http);
@@ -236,6 +246,7 @@
         return new FullFriend { UserID = user.UserID, Username = user.Username };
     }
 
+    // Searches database for users w/ inputted username
     private async Task SearchUsers()
     {
         await db.LoadData(Http);
@@ -248,6 +259,7 @@
             .ToList();
     }
 
+    // Sends friend request to another user
     public async Task AddFriend(FullFriend friend)
     {
         await db.LoadData(Http);
@@ -263,6 +275,7 @@
         await LoadFriendData();
     }
 
+    // Accepts pending friend request
     public async Task AcceptFriend(FullFriend friend)
     {
         await db.LoadData(Http);
@@ -280,7 +293,8 @@
 
         await LoadFriendData();
     }
-
+    
+    // Reject pending friend request
     public async Task RejectFriend(FullFriend friend)
     {
         await db.LoadData(Http);
@@ -299,9 +313,11 @@
         await LoadFriendData();
     }
 
+    // Checks if user is already in friend list
     private bool IsAlreadyFriends(long id) =>
         friends.Any(f => f.UserID == id);
 
+    // Checks if a friend request exists
     private bool HasPendingRequest(long id) =>
         incomingRequests.Any(f => f.UserID == id) ||
         outgoingRequests.Any(f => f.UserID == id);

@@ -72,8 +72,14 @@
 
 </style>
 @code {
+
+    // Determines if bug report button is visable
     private bool showModal = false;
-    private BugReport newBug = new BugReport();
+
+    // Stores info of submitted bug report 
+    private BugReport newBug = new BugReport(); \
+
+    // Submits bug report to the datatbase
     private async Task SubmitBug()
     {
         await db.LoadData(Http);

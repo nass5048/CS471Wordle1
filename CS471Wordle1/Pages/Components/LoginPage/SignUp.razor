@@ -53,9 +53,12 @@
 </EditForm>
 
 @code {
+    // Stores info from sign up page and displays messages
     SignupModel model = new();
     string message = "";
-    bool signedUp = false;
+    bool signedUp = false; // determines if account was created successfully
+    
+    // Creates a new user account after checking input for duplicate usernames
     async Task Register()
     {
         if (model.Password != model.ConfirmPassword)
@@ -64,7 +67,6 @@
             return;
         }
 
-        // TODO: Call your API to create the user
         try
         {
             await db.LoadData(Http);
@@ -91,6 +93,7 @@
         NavigationManager.NavigateTo("/login");
     }
 
+    // Represents info required for account creation
     public class SignupModel
     {
         [Required]
